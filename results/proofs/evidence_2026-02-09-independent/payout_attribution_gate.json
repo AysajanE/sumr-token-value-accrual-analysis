@@ -1,0 +1,23 @@
+{
+  "generated_from": "data/snapshots/external_review/2026-02-09-independent",
+  "rule": "campaign confidence must be EXACT or BOUNDED and residual_ratio <= 0.05",
+  "all_campaigns_pass": false,
+  "campaigns": [
+    {
+      "label": "SIP3.13",
+      "status": "PARTIAL",
+      "attribution_confidence_class": "PARTIAL",
+      "residual_ratio": 0.0,
+      "threshold": 0.05,
+      "pass": false
+    },
+    {
+      "label": "SIP3.13.1",
+      "status": "PARTIAL",
+      "attribution_confidence_class": "PARTIAL",
+      "residual_ratio": 0.7665287661563489,
+      "threshold": 0.05,
+      "pass": false
+    }
+  ]
+}

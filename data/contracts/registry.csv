@@ -1,0 +1,3 @@
+chain,address,label,abi_source,abi_hash,discovered_by,first_seen_block,notes
+base,0x194f360d130f2393a5e9f3117a6a1b78abea1624,SUMR Token,basescan,,docs,,"ERC-20, max supply 1B"
+base,0x7cc488f2681cfc2a5e8a00184bfa94ea6d520d1c,stSUMR (Staking V2),basescan,,docs,,Staking contract from Summer.fi token docs

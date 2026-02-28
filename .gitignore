@@ -1,0 +1,56 @@
+# Environment
+.env
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Raw/large data (regenerate via `make`)
+data/indexed/
+data/prices/
+data/snapshots/**
+!data/snapshots/
+!data/snapshots/**/
+!data/snapshots/**/.gitkeep
+
+# Results (regenerate via `make`)
+results/charts/
+results/tables/
+
+# Internal artifacts and local scratch
+ai/
+tmp/
+
+# Paper build artifacts (generated)
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.toc
+paper/*.tex
+paper/*.pdf
+
+# Docs: default-deny, keep only public/stable docs
+docs/**
+!docs/decisions/
+!docs/decisions/ADR-0001-payout-attribution-overlap-policy.md
+!docs/definitions.md
+!docs/fact_check_report.md
+!docs/validation_plan.md
+!docs/validation_plan_v2.md
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp

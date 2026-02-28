@@ -1,0 +1,10 @@
+{
+  "retrieved_utc": "2026-02-09T15:07:50.170980+00:00",
+  "chain": "base",
+  "contract": "0x194f360D130F2393a5E9F3117A6a1B78aBEa1624",
+  "decimals": 18,
+  "totalSupply_raw": "977149629397309000000000000",
+  "cap_raw": "1000000000000000000000000000",
+  "totalSupply_tokens": 977149629.397309,
+  "cap_tokens": 1000000000.0
+}

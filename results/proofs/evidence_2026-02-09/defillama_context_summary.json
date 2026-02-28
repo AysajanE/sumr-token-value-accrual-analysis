@@ -1,0 +1,18 @@
+{
+  "lazy_first_date": "2025-02-11",
+  "lazy_peak_date": "2025-10-07",
+  "lazy_peak_tvl_usd": 196694657,
+  "lazy_latest_date": "2026-02-09",
+  "lazy_latest_tvl_usd": 58578780,
+  "summer_nearest_2024_11_01_date": "2024-11-01",
+  "summer_nearest_2024_11_01_tvl_usd": 190117326,
+  "summer_peak_date": "2025-10-07",
+  "summer_peak_tvl_usd": 516081298,
+  "lazy_chainTvls_keys": [
+    "Arbitrum",
+    "Base",
+    "Ethereum",
+    "Hyperliquid L1",
+    "Sonic"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "base_inflow_count": 37,
+  "base_inflow_totals": {
+    "USDC": 33271.226947,
+    "WETH": 2.1467630875230177,
+    "EURC": 4306.4035
+  },
+  "base_outflow_count": 16,
+  "base_outflow_totals": {
+    "EURC": 4010.0,
+    "USDC": 21327.865901
+  },
+  "eth_inflow_count": 57,
+  "eth_inflow_totals": {
+    "USDC": 92699.862447,
+    "WETH": 14.725995414384096,
+    "USDT": 26108.707812
+  },
+  "eth_outflow_count": 5,
+  "eth_outflow_totals": {
+    "USDC": 92699.0,
+    "WETH": 8.0,
+    "USDT": 25000.0
+  },
+  "monthly_net_flow_file": "treasury_fee_token_net_flow_monthly.csv"
+}

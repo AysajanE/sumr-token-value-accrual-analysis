@@ -1,0 +1,23 @@
+# On-chain interaction
+web3>=6.0
+eth-abi>=4.0
+
+# Data processing
+pandas>=2.0
+pyarrow>=14.0
+numpy>=1.24
+
+# HTTP / API clients
+requests>=2.31
+python-dotenv>=1.0
+
+# Jupyter
+jupyter>=1.0
+ipykernel>=6.0
+
+# Visualization
+matplotlib>=3.7
+seaborn>=0.12
+
+# Utilities
+tqdm>=4.65

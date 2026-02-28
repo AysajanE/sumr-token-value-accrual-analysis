@@ -1,0 +1,12 @@
+{
+  "stsumr_contract_name": "StakedSummerToken",
+  "stsumr_has_canTransfer": true,
+  "stsumr_revert_transfer_not_allowed": true,
+  "stsumr_mint_or_burn_only_rule": true,
+  "summerstaking_contract_name": "SummerStaking",
+  "summerstaking_has_MAX_LOCKUP_PERIOD": true,
+  "summerstaking_has_MIN_PENALTY_2pct": true,
+  "summerstaking_has_MAX_PENALTY_20pct": true,
+  "summerstaking_has_FIXED_PENALTY_110d": true,
+  "summerstaking_has_WEIGHTED_COEFF_700": true
+}
