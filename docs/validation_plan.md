@@ -1,11 +1,4 @@
 <action_plan>
-META
-
-* Scope: Build a reproducible, on-chain-verifiable pipeline to test whether SUMR accrues value via (i) fee generation in Lazy Summer vaults, (ii) fee routing (“tips”) and split to stakers, and (iii) realized staker distributions (USDC-denominated rewards) net of emissions/dilution—plus sanity-check the article’s major market-context claims.
-* Confidence score: 0.78 (high confidence on *how* to validate; moderate uncertainty on exact contract/event names until you pull ABIs and confirm the deployed module versions).
-* Perspective: Skeptical investor / forensic analyst. Treat docs and dashboards as hypotheses; treat chain state + decoded logs as ground truth.
-
----
 
 0. INVESTIGATION DESIGN (WHAT MATTERS, WHAT “PROVES” IT)
    0.1 Core claims/mechanisms to validate (investment-relevant)
@@ -825,4 +818,5 @@ Documentation baselines (hypotheses, not proof):
 12. What is the realized staker revenue (USDC-equivalent) per month and per staked SUMR?
 13. How much of “staking rewards” is genuine revenue vs inflationary emissions?
 14. Under reasonable TVL/fee scenarios, what revenue yield does SUMR imply relative to its mcap/FDV—and how sensitive is that to governance and TVL volatility?
-    </action_plan>
+
+</action_plan>
