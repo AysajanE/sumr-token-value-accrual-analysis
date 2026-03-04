@@ -29,6 +29,7 @@ set -euo pipefail
 #
 #   CODEX_MODEL=gpt-5.3-codex
 #   CODEX_SANDBOX=workspace-write
+#   CODEX_NETWORK_ACCESS=1
 #   CODEX_APPROVAL=never
 #   CODEX_TIMEOUT_SEC=7200
 #   CODEX_REASONING_EFFORT=xhigh
@@ -57,6 +58,7 @@ ALLOW_PARTIAL_STEP="${ALLOW_PARTIAL_STEP:-0}"
 
 CODEX_MODEL="${CODEX_MODEL:-gpt-5.3-codex}"
 CODEX_SANDBOX="${CODEX_SANDBOX:-workspace-write}"
+CODEX_NETWORK_ACCESS="${CODEX_NETWORK_ACCESS:-1}"
 CODEX_APPROVAL="${CODEX_APPROVAL:-never}"
 CODEX_TIMEOUT_SEC="${CODEX_TIMEOUT_SEC:-7200}"
 CODEX_REASONING_EFFORT="${CODEX_REASONING_EFFORT:-xhigh}"
@@ -286,6 +288,7 @@ payload = {
         "model": os.environ.get("CODEX_MODEL"),
         "reasoning_effort": os.environ.get("CODEX_REASONING_EFFORT"),
         "sandbox": os.environ.get("CODEX_SANDBOX"),
+        "network_access": os.environ.get("CODEX_NETWORK_ACCESS") == "1",
         "approval": os.environ.get("CODEX_APPROVAL"),
         "timeout_sec": int(os.environ.get("CODEX_TIMEOUT_SEC", "0")),
     },
@@ -614,6 +617,13 @@ run_step_with_codex() {
     local cmd=(codex -a "$CODEX_APPROVAL" exec --skip-git-repo-check -C "." -o "$report_path" --output-schema "$EXEC_SCHEMA_PATH")
     [[ -n "$CODEX_MODEL" ]] && cmd+=(-m "$CODEX_MODEL")
     [[ -n "$CODEX_SANDBOX" ]] && cmd+=(-s "$CODEX_SANDBOX")
+    if [[ "$CODEX_SANDBOX" == "workspace-write" ]]; then
+      if [[ "$CODEX_NETWORK_ACCESS" == "1" ]]; then
+        cmd+=(-c "sandbox_workspace_write.network_access=true")
+      else
+        cmd+=(-c "sandbox_workspace_write.network_access=false")
+      fi
+    fi
     [[ -n "$CODEX_REASONING_EFFORT" ]] && cmd+=(-c "model_reasoning_effort=\"$CODEX_REASONING_EFFORT\"")
     cmd+=(-)
 
@@ -700,6 +710,7 @@ preflight() {
   assert_binary_flag "$RUN_IMPORTANT_GATES" "RUN_IMPORTANT_GATES"
   assert_binary_flag "$ALLOW_PARTIAL_STEP" "ALLOW_PARTIAL_STEP"
   assert_binary_flag "$SEED_PREVIOUS_SNAPSHOT" "SEED_PREVIOUS_SNAPSHOT"
+  assert_binary_flag "$CODEX_NETWORK_ACCESS" "CODEX_NETWORK_ACCESS"
 
   [[ "$MODE" == "full" || "$MODE" == "monitoring" ]] || die "MODE must be full or monitoring"
   [[ "$START_STEP" =~ ^[0-9]+$ ]] || die "START_STEP must be numeric"
@@ -740,7 +751,7 @@ preflight() {
   info "TRACKED_RUN_DIR=${TRACKED_RUN_DIR}"
   info "LOG_ROOT=${LOG_ROOT}"
   info "EXEC_TEMPLATE_PATH=${EXEC_TEMPLATE_PATH}"
-  info "CODEX_MODEL=${CODEX_MODEL} CODEX_REASONING_EFFORT=${CODEX_REASONING_EFFORT} CODEX_SANDBOX=${CODEX_SANDBOX}"
+  info "CODEX_MODEL=${CODEX_MODEL} CODEX_REASONING_EFFORT=${CODEX_REASONING_EFFORT} CODEX_SANDBOX=${CODEX_SANDBOX} CODEX_NETWORK_ACCESS=${CODEX_NETWORK_ACCESS}"
 }
 
 trap 'on_exit $?' EXIT
@@ -749,7 +760,7 @@ export RUN_DATE RUN_STAMP RUN_TAG MODE START_STEP END_STEP AUTO_COMMIT DRY_RUN
 export SNAPSHOT_DIR EVIDENCE_DIR TABLES_DIR CHARTS_DIR TRACKED_RUN_DIR LOG_ROOT
 export PLAYBOOK_PATH EXEC_TEMPLATE_PATH
 export REFRESH_FROM_BLOCK REFRESH_CHUNK_SIZE REFRESH_RPC_URL BASE_RPC_URL_EFFECTIVE
-export CODEX_MODEL CODEX_REASONING_EFFORT CODEX_SANDBOX CODEX_APPROVAL CODEX_TIMEOUT_SEC
+export CODEX_MODEL CODEX_REASONING_EFFORT CODEX_SANDBOX CODEX_NETWORK_ACCESS CODEX_APPROVAL CODEX_TIMEOUT_SEC
 
 preflight
 

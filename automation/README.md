@@ -48,6 +48,7 @@ Optional local override:
 
 - `CODEX_MODEL=gpt-5.3-codex`
 - `CODEX_REASONING_EFFORT=xhigh`
+- `CODEX_NETWORK_ACCESS=1` (`workspace-write` sandbox network enabled)
 - `CLAUDE_MODEL=opus`
 - `CLAUDE_EFFORT=high`
 
