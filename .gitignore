@@ -25,6 +25,23 @@ data/snapshots/**
 results/charts/
 results/tables/
 
+# Update-run artifacts: default deny, keep only public reproducibility pack
+results/proofs/update_runs/**
+!results/proofs/update_runs/
+!results/proofs/update_runs/.gitkeep
+!results/proofs/update_runs/**/
+!results/proofs/update_runs/**/execution_manifest_latest.json
+!results/proofs/update_runs/**/execution_summary_latest.md
+!results/proofs/update_runs/**/runtime_context_latest.json
+!results/proofs/update_runs/**/execution_reports_latest/
+!results/proofs/update_runs/**/execution_reports_latest/*.report.json
+!results/proofs/update_runs/**/audit_phase_a_codex_latest.json
+!results/proofs/update_runs/**/audit_phase_a_claude_latest.json
+!results/proofs/update_runs/**/audit_phase_b_triage_latest.json
+!results/proofs/update_runs/**/audit_phase_b_triage_latest.md
+!results/proofs/update_runs/**/audit_phase_c_fix_latest.json
+!results/proofs/update_runs/**/audit_summary_latest.md
+
 # Internal artifacts and local scratch
 ai/
 tmp/

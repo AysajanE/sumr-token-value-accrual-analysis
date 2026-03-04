@@ -1,0 +1,128 @@
+{
+  "generated_at_utc": "2026-03-04T21:27:00.498038+00:00",
+  "run": {
+    "run_date": "2026-03-04",
+    "run_stamp": "20260304T203512Z",
+    "run_tag": "2026-03-04-independent-rerun4",
+    "mode": "full",
+    "dry_run": false,
+    "auto_commit": true,
+    "start_step": 0,
+    "end_step": 10
+  },
+  "status": {
+    "overall": "FAILED",
+    "failed_step": null,
+    "exit_code": 1
+  },
+  "paths": {
+    "snapshot_dir": "data/snapshots/external_review/2026-03-04-independent-rerun4",
+    "evidence_dir": "results/proofs/evidence_2026-03-04-independent-rerun4",
+    "tables_dir": "results/tables",
+    "charts_dir": "results/charts",
+    "tracked_run_dir": "results/proofs/update_runs/2026-03-04-independent-rerun4",
+    "log_root": "ai/logs/update_cycle/2026-03-04-independent-rerun4/20260304T203512Z"
+  },
+  "steps": [
+    {
+      "step_id": "0",
+      "step_name": "setup_context",
+      "status": "PASSED",
+      "started_utc": "2026-03-04T20:35:12Z",
+      "finished_utc": "2026-03-04T20:36:53Z",
+      "log_path": "ai/logs/update_cycle/2026-03-04-independent-rerun4/20260304T203512Z/execution/traces/step0_setup_context.codex.stdout.log",
+      "auto_commit": "07d0794",
+      "report_path": "results/proofs/update_runs/2026-03-04-independent-rerun4/execution_reports_20260304T203512Z/step0_setup_context.report.json"
+    },
+    {
+      "step_id": "1",
+      "step_name": "refresh_defillama",
+      "status": "PASSED",
+      "started_utc": "2026-03-04T20:36:53Z",
+      "finished_utc": "2026-03-04T20:39:05Z",
+      "log_path": "ai/logs/update_cycle/2026-03-04-independent-rerun4/20260304T203512Z/execution/traces/step1_refresh_defillama.codex.stdout.log",
+      "auto_commit": "8eee343",
+      "report_path": "results/proofs/update_runs/2026-03-04-independent-rerun4/execution_reports_20260304T203512Z/step1_refresh_defillama.report.json"
+    },
+    {
+      "step_id": "2",
+      "step_name": "refresh_blockscout",
+      "status": "PASSED",
+      "started_utc": "2026-03-04T20:39:05Z",
+      "finished_utc": "2026-03-04T20:41:19Z",
+      "log_path": "ai/logs/update_cycle/2026-03-04-independent-rerun4/20260304T203512Z/execution/traces/step2_refresh_blockscout.codex.stdout.log",
+      "auto_commit": "fe778e6",
+      "report_path": "results/proofs/update_runs/2026-03-04-independent-rerun4/execution_reports_20260304T203512Z/step2_refresh_blockscout.report.json"
+    },
+    {
+      "step_id": "3",
+      "step_name": "refresh_forum_and_transactions",
+      "status": "PASSED",
+      "started_utc": "2026-03-04T20:41:19Z",
+      "finished_utc": "2026-03-04T20:43:11Z",
+      "log_path": "ai/logs/update_cycle/2026-03-04-independent-rerun4/20260304T203512Z/execution/traces/step3_refresh_forum_and_transactions.codex.stdout.log",
+      "auto_commit": "af6e7f8",
+      "report_path": "results/proofs/update_runs/2026-03-04-independent-rerun4/execution_reports_20260304T203512Z/step3_refresh_forum_and_transactions.report.json"
+    },
+    {
+      "step_id": "4",
+      "step_name": "refresh_supply_and_manifest",
+      "status": "PASSED",
+      "started_utc": "2026-03-04T20:43:11Z",
+      "finished_utc": "2026-03-04T20:45:07Z",
+      "log_path": "ai/logs/update_cycle/2026-03-04-independent-rerun4/20260304T203512Z/execution/traces/step4_refresh_supply_and_manifest.codex.stdout.log",
+      "auto_commit": "d2c266e",
+      "report_path": "results/proofs/update_runs/2026-03-04-independent-rerun4/execution_reports_20260304T203512Z/step4_refresh_supply_and_manifest.report.json"
+    },
+    {
+      "step_id": "5",
+      "step_name": "refresh_claims_and_nav",
+      "status": "PASSED",
+      "started_utc": "2026-03-04T20:45:08Z",
+      "finished_utc": "2026-03-04T20:58:11Z",
+      "log_path": "ai/logs/update_cycle/2026-03-04-independent-rerun4/20260304T203512Z/execution/traces/step5_refresh_claims_and_nav.codex.stdout.log",
+      "auto_commit": "e9aa3ee",
+      "report_path": "results/proofs/update_runs/2026-03-04-independent-rerun4/execution_reports_20260304T203512Z/step5_refresh_claims_and_nav.report.json"
+    },
+    {
+      "step_id": "6",
+      "step_name": "build_evidence_and_v2",
+      "status": "PASSED",
+      "started_utc": "2026-03-04T20:58:11Z",
+      "finished_utc": "2026-03-04T21:01:02Z",
+      "log_path": "ai/logs/update_cycle/2026-03-04-independent-rerun4/20260304T203512Z/execution/traces/step6_build_evidence_and_v2.codex.stdout.log",
+      "auto_commit": "bdb12a3",
+      "report_path": "results/proofs/update_runs/2026-03-04-independent-rerun4/execution_reports_20260304T203512Z/step6_build_evidence_and_v2.report.json"
+    },
+    {
+      "step_id": "7",
+      "step_name": "build_scenarios",
+      "status": "PASSED",
+      "started_utc": "2026-03-04T21:01:02Z",
+      "finished_utc": "2026-03-04T21:03:45Z",
+      "log_path": "ai/logs/update_cycle/2026-03-04-independent-rerun4/20260304T203512Z/execution/traces/step7_build_scenarios.codex.stdout.log",
+      "auto_commit": "8868506",
+      "report_path": "results/proofs/update_runs/2026-03-04-independent-rerun4/execution_reports_20260304T203512Z/step7_build_scenarios.report.json"
+    },
+    {
+      "step_id": "8",
+      "step_name": "freeze_and_monitor",
+      "status": "PASSED",
+      "started_utc": "2026-03-04T21:03:45Z",
+      "finished_utc": "2026-03-04T21:06:20Z",
+      "log_path": "ai/logs/update_cycle/2026-03-04-independent-rerun4/20260304T203512Z/execution/traces/step8_freeze_and_monitor.codex.stdout.log",
+      "auto_commit": "f5f67b1",
+      "report_path": "results/proofs/update_runs/2026-03-04-independent-rerun4/execution_reports_20260304T203512Z/step8_freeze_and_monitor.report.json"
+    },
+    {
+      "step_id": "9",
+      "step_name": "report_generation",
+      "status": "PASSED",
+      "started_utc": "2026-03-04T21:06:20Z",
+      "finished_utc": "2026-03-04T21:24:50Z",
+      "log_path": "ai/logs/update_cycle/2026-03-04-independent-rerun4/20260304T203512Z/execution/traces/step9_report_generation.codex.stdout.log",
+      "auto_commit": "f21b50c",
+      "report_path": "results/proofs/update_runs/2026-03-04-independent-rerun4/execution_reports_20260304T203512Z/step9_report_generation.report.json"
+    }
+  ]
+}
