@@ -70,6 +70,25 @@ Important:
 - Public repo excludes raw snapshot inputs and generated tables/charts.
 - For strict reproducibility of a specific run, regenerate local snapshots first and then rebuild evidence/workflow artifacts.
 
+### 3) Run The Automated Update Chain (execution + audit/review/fix)
+
+Use the update-chain scripts under `automation/`:
+
+```bash
+# End-to-end chain: execution, then Phase A/B/C audit flow
+RUN_TAG="$(date -u +%F)-independent" ./automation/run_update_cycle_chain.sh
+
+# Execution only
+RUN_TAG="$(date -u +%F)-independent" ./automation/run_update_cycle_execution.sh
+
+# Audit/review/fix only
+RUN_TAG="$(date -u +%F)-independent" ./automation/run_update_cycle_audit.sh
+```
+
+Artifacts policy in this flow:
+- Detailed logs remain in `ai/logs/` (gitignored).
+- Public reproducibility artifacts are written to `results/proofs/update_runs/<RUN_TAG>/`.
+
 ## Notebook Guide
 
 The `notebooks/` directory is now implemented as an interactive due-diligence workflow.

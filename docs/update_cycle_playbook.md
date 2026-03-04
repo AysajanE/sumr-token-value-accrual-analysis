@@ -8,6 +8,11 @@ This playbook is designed for:
 - the next update round, and
 - all future rounds, with explicit controls for reproducibility and evidence integrity.
 
+Automation entrypoints for this playbook:
+- `./automation/run_update_cycle_execution.sh`
+- `./automation/run_update_cycle_audit.sh`
+- `./automation/run_update_cycle_chain.sh`
+
 ---
 
 ## 1) Non-Negotiable Integrity Rules
