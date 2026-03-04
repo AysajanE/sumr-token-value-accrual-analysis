@@ -17,6 +17,7 @@ This repository is configured for a public GitHub push with a strict policy:
 - `README.md`, `Makefile`, `requirements.txt`
 - Selected docs:
   - `docs/dependency_graph.md`
+  - `docs/update_cycle_playbook.md`
   - `docs/definitions.md`
   - `docs/fact_check_report.md`
   - `docs/validation_plan.md`

@@ -17,6 +17,7 @@ This repository is evidence-first: it distinguishes on-chain execution evidence 
 - Build orchestration: `Makefile`, `workflow/`
 - Methodology docs (selected): `docs/`
   - Dependency lineage map: `docs/dependency_graph.md`
+  - Update cycle runbook: `docs/update_cycle_playbook.md`
 - Curated proof artifacts and scorecard:
   - `results/proofs/`
   - `results/scorecard.md`
