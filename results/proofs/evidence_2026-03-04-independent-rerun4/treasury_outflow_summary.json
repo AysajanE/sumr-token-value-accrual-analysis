@@ -1,0 +1,13 @@
+{
+  "base_outflow_count": 19,
+  "base_totals": {
+    "USDC": 32161.27567,
+    "EURC": 4010.0
+  },
+  "eth_outflow_count": 6,
+  "eth_totals": {
+    "WETH": 13.76,
+    "USDC": 92699.0,
+    "USDT": 25000.0
+  }
+}

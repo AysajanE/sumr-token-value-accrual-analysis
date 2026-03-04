@@ -1,0 +1,159 @@
+{
+  "generated_from": "data/snapshots/external_review/2026-03-04-independent-rerun4",
+  "metric_policy": {
+    "staker_revenue_deposited_tokens": "funding_to_distributor transfer amount",
+    "staker_revenue_claimed_tokens_considered": "all reward-token Claimed events in execution window",
+    "staker_revenue_claimed_tokens_attributed": "min(claimed_considered, deposited)",
+    "staker_revenue_unclaimed_tokens_residual": "max(0, deposited - claimed_attributed)"
+  },
+  "cycles": [
+    {
+      "label": "SIP3.13",
+      "forum_claim": {
+        "label": "SIP3.13",
+        "topic_id": 600,
+        "title": "[SIP3.13] SUMR Staking V2 USDC Payout - December 2025",
+        "url": "https://forum.summer.fi/t/600",
+        "protocol_revenue_usd": 28876.0,
+        "staker_payout_usdc": 5775.2,
+        "treasury_transfer_usdc": 5953.65368
+      },
+      "governor_execute_tx": "0x5aa10ad32d3d6a3d15d614954dbbe960da2f4376301e28b39b063d485dc15941",
+      "governor_execute_block": 40757499,
+      "governor_execute_timestamp": "2026-01-13T11:39:05.000000Z",
+      "campaign_id_hex": "0x55ba34a59f5c428b64e44a41ce7a674bff92870a561d69ea25592ed24ec908c0",
+      "campaign_source": "new_campaign_event",
+      "campaign_reconstruction_notes": [
+        "calldata_amount_differs_from_new_campaign_event",
+        "calldata_campaign_id_differs_from_new_campaign_event",
+        "calldata_creator_differs_from_new_campaign_event"
+      ],
+      "reward_token": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+      "reward_token_symbol": "USDC",
+      "campaign_amount_tokens": 5833.985241,
+      "funding_to_distributor_tokens": 5833.985241,
+      "funding_to_fee_recipient_tokens": 119.668439,
+      "claim_window_start_block": 40757499,
+      "claim_window_end_block": 41932732,
+      "claim_events_considered": 0,
+      "unique_claimants_considered": 0,
+      "claimed_total_considered": 0.0,
+      "attributed_claimed_total": 0.0,
+      "unattributed_residual": 5833.985241,
+      "residual_ratio": 1.0,
+      "claims_over_campaign_cap": 0.0,
+      "prior_same_token_funding_count": 6,
+      "prior_same_token_funding_total": 7982.69689,
+      "staker_revenue_deposited_tokens": 5833.985241,
+      "staker_revenue_claimed_tokens_considered": 0.0,
+      "staker_revenue_claimed_tokens_attributed": 0.0,
+      "staker_revenue_unclaimed_tokens_residual": 5833.985241,
+      "canonical_metric_policy": "deposited=funding_to_distributor; claimed_considered=all reward-token Claimed events in execution window; claimed_attributed=min(claimed_considered,deposited); unclaimed_residual=deposited-claimed_attributed floor 0",
+      "attribution_confidence_class": "UNPROVEN",
+      "attribution_confidence_reasons": [
+        "no_reward_token_claims_observed"
+      ],
+      "status": "PARTIAL",
+      "status_reasons": [
+        "no_reward_token_claims_observed",
+        "prior_same_token_funding_exists",
+        "campaign_funding_not_fully_claimed_in_window"
+      ],
+      "attribution_model": "token_scoped_flow_cap_v1",
+      "related_post_execute_claim_activity": [
+        {
+          "token_symbol": "aBasUSDC",
+          "claim_events": 2220,
+          "claimed_total": 84601.602688
+        }
+      ],
+      "attribution_note": "Attribution is deterministic but token-scoped. Claimed events omit campaign ID, so campaign attribution uses reward-token claim windows and funding-cap constraints. Campaign IDs are reconstructed from NewCampaign receipt logs when available."
+    },
+    {
+      "label": "SIP3.13.1",
+      "forum_claim": {
+        "label": "SIP3.13.1",
+        "topic_id": 698,
+        "title": "[SIP3.13.1] SUMR Staking V2 USDC Payout - January 2026",
+        "url": "https://forum.summer.fi/t/698",
+        "protocol_revenue_usd": 43504.49,
+        "staker_payout_usdc": 8700.898,
+        "treasury_transfer_usdc": 8961.92494
+      },
+      "governor_execute_tx": "0x30643401cafbc331687f312b4fab670470553419ea3c2cef510f48e00c488e54",
+      "governor_execute_block": 41932733,
+      "governor_execute_timestamp": "2026-02-09T16:33:33.000000Z",
+      "campaign_id_hex": "0x33b711f462991e30d2531193b02dbda4f0d2fd596a4c06d8a01701c6e0604fea",
+      "campaign_source": "new_campaign_event",
+      "campaign_reconstruction_notes": [
+        "calldata_amount_differs_from_new_campaign_event",
+        "calldata_campaign_id_differs_from_new_campaign_event",
+        "calldata_creator_differs_from_new_campaign_event"
+      ],
+      "reward_token": "0x98c49e13bf99d7cad8069faa2a370933ec9ecf17",
+      "reward_token_symbol": "LVUSDC",
+      "campaign_amount_tokens": 8301.739885,
+      "funding_to_distributor_tokens": 8301.739885,
+      "funding_to_fee_recipient_tokens": 170.287756,
+      "claim_window_start_block": 41932733,
+      "claim_window_end_block": null,
+      "claim_events_considered": 99,
+      "unique_claimants_considered": 86,
+      "claimed_total_considered": 1947.513023,
+      "attributed_claimed_total": 1947.513023,
+      "unattributed_residual": 6354.226862,
+      "residual_ratio": 0.765409052803634,
+      "claims_over_campaign_cap": 0.0,
+      "prior_same_token_funding_count": 0,
+      "prior_same_token_funding_total": 0.0,
+      "staker_revenue_deposited_tokens": 8301.739885,
+      "staker_revenue_claimed_tokens_considered": 1947.513023,
+      "staker_revenue_claimed_tokens_attributed": 1947.513023,
+      "staker_revenue_unclaimed_tokens_residual": 6354.226862,
+      "canonical_metric_policy": "deposited=funding_to_distributor; claimed_considered=all reward-token Claimed events in execution window; claimed_attributed=min(claimed_considered,deposited); unclaimed_residual=deposited-claimed_attributed floor 0",
+      "attribution_confidence_class": "PARTIAL",
+      "attribution_confidence_reasons": [
+        "residual_ratio_above_0_05"
+      ],
+      "status": "PARTIAL",
+      "status_reasons": [
+        "campaign_funding_not_fully_claimed_in_window"
+      ],
+      "attribution_model": "token_scoped_flow_cap_v1",
+      "related_post_execute_claim_activity": [
+        {
+          "token_symbol": "USDC",
+          "claim_events": 1338,
+          "claimed_total": 6791.263619
+        },
+        {
+          "token_symbol": "aBasUSDC",
+          "claim_events": 2220,
+          "claimed_total": 84601.602688
+        }
+      ],
+      "attribution_note": "Attribution is deterministic but token-scoped. Claimed events omit campaign ID, so campaign attribution uses reward-token claim windows and funding-cap constraints. Campaign IDs are reconstructed from NewCampaign receipt logs when available."
+    }
+  ],
+  "aggregate": {
+    "staker_revenue_deposited_tokens_total": 14135.725126,
+    "staker_revenue_claimed_tokens_attributed_total": 1947.513023,
+    "staker_revenue_unclaimed_tokens_residual_total": 12188.212103,
+    "reward_token_totals": [
+      {
+        "reward_token_symbol": "LVUSDC",
+        "staker_revenue_deposited_tokens": 8301.739885,
+        "staker_revenue_claimed_tokens_considered": 1947.513023,
+        "staker_revenue_claimed_tokens_attributed": 1947.513023,
+        "staker_revenue_unclaimed_tokens_residual": 6354.226862
+      },
+      {
+        "reward_token_symbol": "USDC",
+        "staker_revenue_deposited_tokens": 5833.985241,
+        "staker_revenue_claimed_tokens_considered": 0.0,
+        "staker_revenue_claimed_tokens_attributed": 0.0,
+        "staker_revenue_unclaimed_tokens_residual": 5833.985241
+      }
+    ]
+  }
+}
