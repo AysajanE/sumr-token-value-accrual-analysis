@@ -43,6 +43,7 @@ Optional local override:
 - No enforced red/green test choreography.
 - Practical/high-signal checks only.
 - Audit gate requires both independent audits to pass.
+- Step 10 (quality gates) defaults to risk-callout mode if only Gate E is open (`ALLOW_STEP10_PARTIAL_RISK_CALLOUT=1`), so updates can publish with explicit risk disclosure.
 
 ## Default Agent Config
 
