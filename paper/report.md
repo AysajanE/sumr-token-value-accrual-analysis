@@ -25,27 +25,27 @@ Decision implication:
 ## Current Facts (Auto-Generated)
 
 ### Sources
-- Synced UTC: 2026-02-26T20:08:01.681803+00:00
-- Monitoring source: `results/tables/monitoring_latest.json`
-- Evidence as-of: `2026-02-09T15:07:50.170980+00:00`
+- Synced UTC: 2026-03-04T21:18:12.728942+00:00
+- Monitoring source: `/Users/aeziz-local/Side Projects/$sumr-token-value-accrual-analysis/results/tables/monitoring_latest.json`
+- Evidence as-of: `2026-03-04T20:44:07.590969+00:00`
 
 ### Fee-Rate Reconciliation (FEE-RATE-001)
-- Fee window: `2025-11-12` -> `2026-02-09` (`90` days)
-- Fees (window sum): `132,082.000000` USD
-- Annualized fees: `535,665.888889` USD
-- Avg TVL (matched fee window): `86,389,173.688889` USD (`90` points)
+- Fee window: `2025-12-05` -> `2026-03-04` (`90` days)
+- Fees (window sum): `119,094.000000` USD
+- Annualized fees: `482,992.333333` USD
+- Avg TVL (matched fee window): `74,606,528.855556` USD (`90` points)
 - Formula: `observed_rate = fees_derived_90d_annualized / lazy_tvl_window_avg_usd`
-- Observed realized annualized fee rate: `0.6201%`
+- Observed realized annualized fee rate: `0.6474%`
 - Ticket status: `RESOLVED` (`LOW`)
-- Ticket note: Formula: observed = fees_derived_90d_annualized / lazy_tvl_window_avg_usd, where fees_derived_90d_annualized = fees_derived_90d * (365 / days_in_window). Window: 2025-11-12 to 2026-02-09 (90 fee days, 90 TVL points).
+- Ticket note: Formula: observed = fees_derived_90d_annualized / lazy_tvl_window_avg_usd, where fees_derived_90d_annualized = fees_derived_90d * (365 / days_in_window). Window: 2025-12-05 to 2026-03-04 (90 fee days, 90 TVL points).
 
 ### Monitoring Snapshot
-- Observed UTC: `2026-02-25T21:03:28.819095+00:00`
-- Refresh block range: `41932733` -> `42628137`
-- SIP3.13 confidence: `PARTIAL`
+- Observed UTC: `2026-03-04T21:04:29.548860+00:00`
+- Refresh block range: `41932733` -> `42933895`
+- SIP3.13 confidence: `UNPROVEN`
 - SIP3.13.1 confidence: `PARTIAL`
-- LVUSDC claim events (post-exec): `84`
-- LVUSDC claim total (post-exec): `1,937.690789`
+- LVUSDC claim events (post-exec): `99`
+- LVUSDC claim total (post-exec): `1,947.513023`
 - Gate passed: `False`
 - v2 gate KPI status: `BLOCKED_NO_GATE_PASSED_CYCLES`
 - v2 scenario status: `BLOCKED_NO_GATE_PASSED_CYCLES`
@@ -53,17 +53,17 @@ Decision implication:
 ### Bounded Decision Bands (Supplemental, Non-Gate-Validated)
 - Bounded band status: `READY_SUPPLEMENTAL_BOUNDED`
 - Policy: bounded bands are supplemental; strict gate outputs remain the validated scenario path.
-- Aggregate confidence class: `PARTIAL`
-- Lower bound (claimed attributed, USDC-eq): `7,885.580763`
+- Aggregate confidence class: `UNPROVEN`
+- Lower bound (claimed attributed, USDC-eq): `2,062.006999`
 - Upper bound (deposited, USDC-eq): `14,619.857691`
-- Realized ratio (lower/upper): `53.9375%`
+- Realized ratio (lower/upper): `14.1042%`
 
 ### Scenario Assumption Pins
 - Scenario assumptions status: `READY_PINNED`
-- Circulating supply pin (tokens): `977,149,629.397309`
+- Circulating supply pin (tokens): `977,149,629.405695`
 - Token price pin (USD): `0.005000`
 - Token price source: `manual_pin_baseline_assumption`
-- Open high-severity tickets: `0`
+- Open high-severity tickets: `1`
 
 <!-- END AUTO_FACTS -->
 
