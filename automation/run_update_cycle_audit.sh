@@ -36,13 +36,13 @@ set -euo pipefail
 #   GATE_FAIL_VERDICTS=fail,blocked,conditional_pass
 #   GATE_FAILURE_EXIT_CODE=42
 #
-#   CODEX_MODEL=gpt-5-codex
+#   CODEX_MODEL=gpt-5.3-codex
 #   CODEX_SANDBOX=workspace-write
 #   CODEX_APPROVAL=never
 #   CODEX_TIMEOUT_SEC=5400
-#   CODEX_REASONING_EFFORT=high (optional)
+#   CODEX_REASONING_EFFORT=xhigh
 #
-#   CLAUDE_MODEL=sonnet
+#   CLAUDE_MODEL=opus
 #   CLAUDE_PERMISSION_MODE=dontAsk
 #   CLAUDE_EFFORT=high
 #   CLAUDE_TIMEOUT_SEC=5400
@@ -90,13 +90,13 @@ GATE_FAIL_SEVERITIES="${GATE_FAIL_SEVERITIES:-critical,high}"
 GATE_FAIL_VERDICTS="${GATE_FAIL_VERDICTS:-fail,blocked,conditional_pass}"
 GATE_FAILURE_EXIT_CODE="${GATE_FAILURE_EXIT_CODE:-42}"
 
-CODEX_MODEL="${CODEX_MODEL:-gpt-5-codex}"
+CODEX_MODEL="${CODEX_MODEL:-gpt-5.3-codex}"
 CODEX_SANDBOX="${CODEX_SANDBOX:-workspace-write}"
 CODEX_APPROVAL="${CODEX_APPROVAL:-never}"
 CODEX_TIMEOUT_SEC="${CODEX_TIMEOUT_SEC:-5400}"
-CODEX_REASONING_EFFORT="${CODEX_REASONING_EFFORT:-}"
+CODEX_REASONING_EFFORT="${CODEX_REASONING_EFFORT:-xhigh}"
 
-CLAUDE_MODEL="${CLAUDE_MODEL:-sonnet}"
+CLAUDE_MODEL="${CLAUDE_MODEL:-opus}"
 CLAUDE_PERMISSION_MODE="${CLAUDE_PERMISSION_MODE:-dontAsk}"
 CLAUDE_EFFORT="${CLAUDE_EFFORT:-high}"
 CLAUDE_TIMEOUT_SEC="${CLAUDE_TIMEOUT_SEC:-5400}"
@@ -155,6 +155,32 @@ assert_binary_flag() {
   local value="$1"
   local name="$2"
   [[ "$value" =~ ^(0|1)$ ]] || die "$name must be 0 or 1 (received '$value')"
+}
+
+assert_codex_reasoning_effort() {
+  case "$CODEX_REASONING_EFFORT" in
+    minimal|low|medium|high|xhigh)
+      ;;
+    "")
+      die "CODEX_REASONING_EFFORT must be set (recommended: xhigh for gpt-5.3-codex)"
+      ;;
+    *)
+      die "CODEX_REASONING_EFFORT must be one of: minimal, low, medium, high, xhigh (received '$CODEX_REASONING_EFFORT')"
+      ;;
+  esac
+}
+
+assert_claude_effort() {
+  case "$CLAUDE_EFFORT" in
+    low|medium|high)
+      ;;
+    "")
+      die "CLAUDE_EFFORT must be set (recommended: high for opus)"
+      ;;
+    *)
+      die "CLAUDE_EFFORT must be one of: low, medium, high (received '$CLAUDE_EFFORT')"
+      ;;
+  esac
 }
 
 run_with_timeout() {
@@ -909,6 +935,8 @@ preflight() {
   [[ "$PHASE_C_MAX_ITERATIONS" =~ ^[0-9]+$ ]] || die "PHASE_C_MAX_ITERATIONS must be numeric"
   [[ "$GATE_FAILURE_EXIT_CODE" =~ ^[0-9]+$ ]] || die "GATE_FAILURE_EXIT_CODE must be numeric"
   [[ "$PHASE_C_FIX_MODE" == "fresh" || "$PHASE_C_FIX_MODE" == "resume" ]] || die "PHASE_C_FIX_MODE must be fresh or resume"
+  assert_codex_reasoning_effort
+  assert_claude_effort
 
   [[ -f "$PLAYBOOK_PATH" ]] || die "Missing playbook: $PLAYBOOK_PATH"
   [[ -f "$AUDIT_TEMPLATE_PATH" ]] || die "Missing audit prompt template: $AUDIT_TEMPLATE_PATH"
@@ -945,6 +973,8 @@ preflight() {
   info "EVIDENCE_DIR=${EVIDENCE_DIR}"
   info "TRACKED_RUN_DIR=${TRACKED_RUN_DIR}"
   info "LOG_ROOT=${LOG_ROOT}"
+  info "CODEX_MODEL=${CODEX_MODEL} CODEX_REASONING_EFFORT=${CODEX_REASONING_EFFORT} CODEX_SANDBOX=${CODEX_SANDBOX}"
+  info "CLAUDE_MODEL=${CLAUDE_MODEL} CLAUDE_EFFORT=${CLAUDE_EFFORT} CLAUDE_PERMISSION_MODE=${CLAUDE_PERMISSION_MODE}"
   info "PHASE_C_ENABLED=${PHASE_C_ENABLED} PHASE_C_MAX_ITERATIONS=${PHASE_C_MAX_ITERATIONS} PHASE_C_FIX_MODE=${PHASE_C_FIX_MODE}"
 }
 

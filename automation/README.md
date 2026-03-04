@@ -44,6 +44,13 @@ Optional local override:
 - Practical/high-signal checks only.
 - Audit gate requires both independent audits to pass.
 
+## Default Agent Config
+
+- `CODEX_MODEL=gpt-5.3-codex`
+- `CODEX_REASONING_EFFORT=xhigh`
+- `CLAUDE_MODEL=opus`
+- `CLAUDE_EFFORT=high`
+
 ## Typical Commands
 
 ```bash

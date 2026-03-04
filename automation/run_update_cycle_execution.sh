@@ -27,11 +27,11 @@ set -euo pipefail
 #   ENFORCE_CLEAN_WORKTREE=1
 #   ALLOW_PARTIAL_STEP=0
 #
-#   CODEX_MODEL=gpt-5-codex
+#   CODEX_MODEL=gpt-5.3-codex
 #   CODEX_SANDBOX=workspace-write
 #   CODEX_APPROVAL=never
 #   CODEX_TIMEOUT_SEC=7200
-#   CODEX_REASONING_EFFORT=high   (optional)
+#   CODEX_REASONING_EFFORT=xhigh
 #
 #   PLAYBOOK_PATH=docs/update_cycle_playbook.md
 #   EXEC_TEMPLATE_PATH=ai/prompts/update_cycle_implementation_prompt.md
@@ -55,11 +55,11 @@ ENFORCE_CLEAN_WORKTREE="${ENFORCE_CLEAN_WORKTREE:-1}"
 RUN_IMPORTANT_GATES="${RUN_IMPORTANT_GATES:-1}"
 ALLOW_PARTIAL_STEP="${ALLOW_PARTIAL_STEP:-0}"
 
-CODEX_MODEL="${CODEX_MODEL:-gpt-5-codex}"
+CODEX_MODEL="${CODEX_MODEL:-gpt-5.3-codex}"
 CODEX_SANDBOX="${CODEX_SANDBOX:-workspace-write}"
 CODEX_APPROVAL="${CODEX_APPROVAL:-never}"
 CODEX_TIMEOUT_SEC="${CODEX_TIMEOUT_SEC:-7200}"
-CODEX_REASONING_EFFORT="${CODEX_REASONING_EFFORT:-}"
+CODEX_REASONING_EFFORT="${CODEX_REASONING_EFFORT:-xhigh}"
 
 PLAYBOOK_PATH="${PLAYBOOK_PATH:-docs/update_cycle_playbook.md}"
 EXEC_TEMPLATE_PATH="${EXEC_TEMPLATE_PATH:-ai/prompts/update_cycle_implementation_prompt.md}"
@@ -108,6 +108,19 @@ assert_binary_flag() {
   local value="$1"
   local name="$2"
   [[ "$value" =~ ^(0|1)$ ]] || die "$name must be 0 or 1 (received '$value')"
+}
+
+assert_codex_reasoning_effort() {
+  case "$CODEX_REASONING_EFFORT" in
+    minimal|low|medium|high|xhigh)
+      ;;
+    "")
+      die "CODEX_REASONING_EFFORT must be set (recommended: xhigh for gpt-5.3-codex)"
+      ;;
+    *)
+      die "CODEX_REASONING_EFFORT must be one of: minimal, low, medium, high, xhigh (received '$CODEX_REASONING_EFFORT')"
+      ;;
+  esac
 }
 
 utc_now() {
@@ -271,6 +284,7 @@ payload = {
     },
     "codex": {
         "model": os.environ.get("CODEX_MODEL"),
+        "reasoning_effort": os.environ.get("CODEX_REASONING_EFFORT"),
         "sandbox": os.environ.get("CODEX_SANDBOX"),
         "approval": os.environ.get("CODEX_APPROVAL"),
         "timeout_sec": int(os.environ.get("CODEX_TIMEOUT_SEC", "0")),
@@ -691,6 +705,7 @@ preflight() {
   [[ "$START_STEP" =~ ^[0-9]+$ ]] || die "START_STEP must be numeric"
   [[ "$END_STEP" =~ ^[0-9]+$ ]] || die "END_STEP must be numeric"
   (( START_STEP <= END_STEP )) || die "START_STEP must be <= END_STEP"
+  assert_codex_reasoning_effort
 
   [[ -f "$PLAYBOOK_PATH" ]] || die "Missing playbook: $PLAYBOOK_PATH"
   if [[ ! -f "$EXEC_TEMPLATE_PATH" ]]; then
@@ -725,7 +740,7 @@ preflight() {
   info "TRACKED_RUN_DIR=${TRACKED_RUN_DIR}"
   info "LOG_ROOT=${LOG_ROOT}"
   info "EXEC_TEMPLATE_PATH=${EXEC_TEMPLATE_PATH}"
-  info "CODEX_MODEL=${CODEX_MODEL} CODEX_SANDBOX=${CODEX_SANDBOX}"
+  info "CODEX_MODEL=${CODEX_MODEL} CODEX_REASONING_EFFORT=${CODEX_REASONING_EFFORT} CODEX_SANDBOX=${CODEX_SANDBOX}"
 }
 
 trap 'on_exit $?' EXIT
@@ -734,7 +749,7 @@ export RUN_DATE RUN_STAMP RUN_TAG MODE START_STEP END_STEP AUTO_COMMIT DRY_RUN
 export SNAPSHOT_DIR EVIDENCE_DIR TABLES_DIR CHARTS_DIR TRACKED_RUN_DIR LOG_ROOT
 export PLAYBOOK_PATH EXEC_TEMPLATE_PATH
 export REFRESH_FROM_BLOCK REFRESH_CHUNK_SIZE REFRESH_RPC_URL BASE_RPC_URL_EFFECTIVE
-export CODEX_MODEL CODEX_SANDBOX CODEX_APPROVAL CODEX_TIMEOUT_SEC
+export CODEX_MODEL CODEX_REASONING_EFFORT CODEX_SANDBOX CODEX_APPROVAL CODEX_TIMEOUT_SEC
 
 preflight
 
