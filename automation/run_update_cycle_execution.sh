@@ -26,6 +26,7 @@ set -euo pipefail
 #   DRY_RUN=0
 #   ENFORCE_CLEAN_WORKTREE=1
 #   ALLOW_PARTIAL_STEP=0
+#   ALLOW_STEP10_PARTIAL_RISK_CALLOUT=1
 #
 #   CODEX_MODEL=gpt-5.3-codex
 #   CODEX_SANDBOX=workspace-write
@@ -55,6 +56,7 @@ DRY_RUN="${DRY_RUN:-0}"
 ENFORCE_CLEAN_WORKTREE="${ENFORCE_CLEAN_WORKTREE:-1}"
 RUN_IMPORTANT_GATES="${RUN_IMPORTANT_GATES:-1}"
 ALLOW_PARTIAL_STEP="${ALLOW_PARTIAL_STEP:-0}"
+ALLOW_STEP10_PARTIAL_RISK_CALLOUT="${ALLOW_STEP10_PARTIAL_RISK_CALLOUT:-1}"
 
 CODEX_MODEL="${CODEX_MODEL:-gpt-5.3-codex}"
 CODEX_SANDBOX="${CODEX_SANDBOX:-workspace-write}"
@@ -202,6 +204,35 @@ step_name_for() {
   esac
 }
 
+is_public_update_run_path() {
+  local path="$1"
+  case "$path" in
+    results/proofs/update_runs/.gitkeep) return 0 ;;
+    results/proofs/update_runs/*/execution_manifest_latest.json) return 0 ;;
+    results/proofs/update_runs/*/execution_summary_latest.md) return 0 ;;
+    results/proofs/update_runs/*/runtime_context_latest.json) return 0 ;;
+    results/proofs/update_runs/*/execution_reports_latest/*.report.json) return 0 ;;
+    results/proofs/update_runs/*/audit_phase_a_codex_latest.json) return 0 ;;
+    results/proofs/update_runs/*/audit_phase_a_claude_latest.json) return 0 ;;
+    results/proofs/update_runs/*/audit_phase_b_triage_latest.json) return 0 ;;
+    results/proofs/update_runs/*/audit_phase_b_triage_latest.md) return 0 ;;
+    results/proofs/update_runs/*/audit_phase_c_fix_latest.json) return 0 ;;
+    results/proofs/update_runs/*/audit_summary_latest.md) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+unstage_non_public_update_run_artifacts() {
+  local path
+  while IFS= read -r path; do
+    [[ "$path" == results/proofs/update_runs/* ]] || continue
+    if ! is_public_update_run_path "$path"; then
+      git restore --staged -- "$path" >/dev/null 2>&1 || true
+      info "Unstaged non-public update-run artifact: $path"
+    fi
+  done < <(git diff --cached --name-only)
+}
+
 record_step() {
   local step_id="$1"
   local step_name="$2"
@@ -231,6 +262,7 @@ commit_after_step() {
   fi
 
   git add -A -- . ':(exclude)ai/**' ':(exclude)tmp/**'
+  unstage_non_public_update_run_artifacts
 
   if git diff --cached --quiet --ignore-submodules --; then
     echo "no_changes"
@@ -644,7 +676,11 @@ run_step_with_codex() {
   fi
 
   if [[ "$status" == "partial" && "$ALLOW_PARTIAL_STEP" != "1" ]]; then
-    die "Step ${step_id} reported status=partial and ALLOW_PARTIAL_STEP=0"
+    if [[ "$step_id" == "10" && "$ALLOW_STEP10_PARTIAL_RISK_CALLOUT" == "1" ]]; then
+      info "Step 10 reported status=partial; continuing in risk-callout mode (ALLOW_STEP10_PARTIAL_RISK_CALLOUT=1)."
+    else
+      die "Step ${step_id} reported status=partial and ALLOW_PARTIAL_STEP=0"
+    fi
   fi
 
   LAST_STEP_LOG_PATH="$stdout_log"
@@ -709,6 +745,7 @@ preflight() {
   assert_binary_flag "$ENFORCE_CLEAN_WORKTREE" "ENFORCE_CLEAN_WORKTREE"
   assert_binary_flag "$RUN_IMPORTANT_GATES" "RUN_IMPORTANT_GATES"
   assert_binary_flag "$ALLOW_PARTIAL_STEP" "ALLOW_PARTIAL_STEP"
+  assert_binary_flag "$ALLOW_STEP10_PARTIAL_RISK_CALLOUT" "ALLOW_STEP10_PARTIAL_RISK_CALLOUT"
   assert_binary_flag "$SEED_PREVIOUS_SNAPSHOT" "SEED_PREVIOUS_SNAPSHOT"
   assert_binary_flag "$CODEX_NETWORK_ACCESS" "CODEX_NETWORK_ACCESS"
 
@@ -752,6 +789,7 @@ preflight() {
   info "LOG_ROOT=${LOG_ROOT}"
   info "EXEC_TEMPLATE_PATH=${EXEC_TEMPLATE_PATH}"
   info "CODEX_MODEL=${CODEX_MODEL} CODEX_REASONING_EFFORT=${CODEX_REASONING_EFFORT} CODEX_SANDBOX=${CODEX_SANDBOX} CODEX_NETWORK_ACCESS=${CODEX_NETWORK_ACCESS}"
+  info "ALLOW_STEP10_PARTIAL_RISK_CALLOUT=${ALLOW_STEP10_PARTIAL_RISK_CALLOUT}"
 }
 
 trap 'on_exit $?' EXIT

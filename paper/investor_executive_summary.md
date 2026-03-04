@@ -2,58 +2,32 @@
 title: SUMR Investor Executive Summary
 ---
 
-# SUMR Investor Executive Summary — Narrative Draft
+# Executive Summary
 
-As-of (latest monitoring observation): 2026-02-25
+Classification remains **RESTRICTED**: value accrual is real on-chain, but full institutional attribution confidence is still bounded.
 
-Report generated: 2026-02-26
+Why the mechanism can work:
 
-Evidence window (verified baseline): through 2026-02-09
+1. The mechanism works only if fee productivity remains near or above a 0.50% annualized-on-TVL floor (verified lens currently 0.647%, above that floor) and governance routes a stable, auditable share of fees to stakers.
+2. Bounded realization ratio (14.10%): conservative share of claimed distributions directly evidenced on-chain via source-of-funds mapping. This is an evidence-coverage statistic, not a missing-funds claim; underwriting target remains >=80% for >=60 consecutive days.
+3. At $0.003319, SUMR trades at 0.771x of modeled reward-emission break-even ($0.004305), about 22.90% below the level where expected annual staker cash distributions would equal modeled annual reward emissions in USD terms; this is a sustainability signal, not a full valuation model.
 
-Reference SUMR price used in this memo: $0.003319
+Kill switches (explicit invalidation triggers):
 
-## How to read this memo
-This memo is written as an investor underwriting note. It is intentionally narrative-first: each
-table/figure is introduced, interpreted, and tied back to a decision implication.
+1. Fee productivity falls below 0.30% annualized for 90 consecutive days.
+2. Governance controls are not hardened (no published privileged role-member map and no effective routing/upgrade timelocks).
+3. Evidence coverage remains below 80% for 60 consecutive days with unresolved discrepancy tickets.
+4. Newly liquid supply accelerates without offsetting mitigation (lock extensions, emission reductions, or buyback/sink policy).
 
-The report uses two data lenses. The verified lens freezes on-chain values at a defined evidence
-timestamp to avoid mixing sources and to support reproducible checks. The live lens uses the
-most recent external snapshot to describe current conditions. When the two disagree, we treat
-the difference as a risk signal rather than “pick the better number.”
+Key blockers to institutional underwriting (current):
 
-Key terms used throughout: (i) fee productivity = annualized protocol fees divided by TVL; (ii)
-realization ratio = the share of reported inflows that can be verified as claimed/realized to the
-intended destination (bounded when attribution is incomplete); (iii) break-even price (emission
-sustainability) = cash paid to stakers divided by tokens emitted to stakers (USD per emitted
-token).
+1. Attribution quality is below high-confidence threshold (>=80% for >=60 consecutive days) and open discrepancy tickets remain.
+2. Dilution and newly liquid supply overhang remain large versus modeled staker cash distributions.
+3. Governance/control transparency is incomplete for privileged roles and routing constraints.
 
-## 1. Executive Summary
-At the current reference price of $0.003319, SUMR’s implied market capitalization is ~$3.24M
-on a max supply of ~977.15M tokens. The protocol’s TVL is ~$47.38M (verified baseline), so the
-token is not “priced like a mature fee-asset.” It is priced like an option on a turnaround:
-sustained TVL recovery + stable fee productivity + cleaner value routing to stakers.
+> **What you're underwriting (compact):** Fee persistence plus governance routing to holders, at a discount to modeled reward-emission break-even, with known risks: thin liquidity, holder concentration, unlock overhang, and control risk.
 
-Operationally, fee productivity is above the minimum floor needed for the staking economics to
-function (0.644% annualized-on-TVL in the verified lens). The problem is trend and persistence:
-30-day fees are down ~32% versus the prior 30 days, and TVL remains ~76% below the historical
-peak. This is not the tape you underwrite for a high-confidence upside scenario.
-
-The core underwriting blocker is value capture quality. The observed realization ratio is 53.94%
-and is explicitly bounded, meaning not all inflows can be followed cleanly to their final
-destination. Until the realization ratio is consistently above ~60% and can be treated as strict
-(not bounded), the staking cashflow is not investable as a dependable yield stream.
-
-Dilution is the other hard constraint. The model projects ~265.4M tokens becoming newly liquid
-over the next 12 months. At the reference price, that is roughly $0.88M of potential sellable
-supply—about 14× to 26× larger than the estimated annual cash distributions to stakers
-($33.7k–$62.5k). Unless demand is strong enough to absorb unlocks (or unlocks are effectively
-re-locked via staking), the token will struggle to re-rate on fundamentals alone.
-
-Bottom line: the classification remains conditional. A small, tightly risk-managed position can be
-rational if you have an explicit catalyst thesis and enforce kill-switches (fee productivity
-breakdown, further TVL deterioration, governance deterioration, or worsening attribution). A
-full underwriting requires improved routing transparency, clearer governance controls, and
-evidence of sustained fee/TVL stabilization.
+# Current Snapshot
 
 | Item | Value |
 | --- | --- |
@@ -63,85 +37,38 @@ evidence of sustained fee/TVL stabilization.
 | Market cap at reference price | $3,243,159.62 |
 | Break-even price | $0.004305 |
 | Price to break-even | 0.771x |
-| Lazy Summer TVL (verified baseline) | $47,381,485.00 |
-| TVL drawdown from peak | 75.91% |
-| Fees, last 30 days (verified baseline) | $31,456.00 |
-| Fee productivity (90d annualized fees / 90d avg TVL, verified lens) | 0.644% |
-| Fee productivity (30d annualized fees / latest TVL, live lens) | 0.808% |
-| Fee trend vs prior 30 days (live external) | -32.14% |
-
-## 2. Current Snapshot (what is true right now)
-This section is the “single source of truth” page for the memo. Everything else in the report
-should reconcile to these values or explicitly explain why it does not.
-
-Two things matter most for a token like SUMR: (i) whether the protocol’s economic engine is
-producing fees at a rate that can support staking incentives, and (ii) whether the user base is
-expanding or contracting (proxied by TVL trend).
-
-Right now, the protocol clears the fee-productivity floor, but the direction is negative: fees are
-down materially over the last month and TVL remains deeply depressed versus peak. That
-combination typically produces range-bound price action unless a catalyst changes the slope.
+| Lazy Summer TVL (verified baseline) | $47,907,854.00 |
+| TVL drawdown from peak | 75.64% |
+| Fees, last 30 days (verified baseline) | $29,799.00 |
+| Fee productivity (90d annualized fees / 90d avg TVL, verified lens) | 0.647% |
+| Fee productivity (30d annualized fees / latest TVL, live lens) | 0.757% |
+| Fee trend vs prior 30 days (live external) | -34.18% |
 
 ![TVL and Fees Trend](../results/charts/investor_tvl_fees_trend.png)
 
-## 3. Data integrity and reconciliation
-The fastest way to lose investor trust is to mix numbers from different timestamps and different
-sources. The reconciliation table below is valuable, but it is currently presented as a naked
-artifact.
+# Verified vs External Data Reconciliation
 
-Rewrite the narrative as follows: we lock a verified baseline snapshot for auditability, then
-compare it to a live external snapshot to ensure the numbers are directionally consistent. If
-deltas are small, the data pipeline is reliable; if deltas are large, we treat it as a diligence issue,
-not a rounding error.
-
-In the latest draft, the key reconciliation deltas are small (TVL matches, fees differ by ~1–2%).
-That is good enough to proceed with scenario modeling. The remaining uncertainty is not the
-top-line numbers—it is attribution and routing (see Section 4).
+This table reconciles frozen verification baselines versus live external snapshots to avoid source mixing.
+Fee productivity lenses: verified uses 90d annualized fees / 90d average TVL; live uses 30d annualized fees / latest TVL.
 
 | Metric | Verified baseline | External snapshot | Delta vs verified | Valuation source-of-truth |
 | --- | --- | --- | --- | --- |
-| Lazy Summer TVL (USD) | 47,381,485.00 | 47,381,485.00 | 0.00% | Use verified baseline for underwriting; external used for peer context only. |
-| Lazy Summer Fees 30d (USD) | 31,456.00 | 31,987.00 | 1.69% | Use verified baseline for valuation narratives; external used for comparables and market-share context. |
+| Lazy Summer TVL (USD) | 47,907,854.00 | 47,907,854.00 | 0.00% | Use verified baseline for underwriting; external used for peer context only. |
+| Lazy Summer Fees 30d (USD) | 29,799.00 | 30,276.00 | 1.60% | Use verified baseline for valuation narratives; external used for comparables and market-share context. |
 
-## 4. Value transmission and realization quality
-SUMR’s investment case depends on a clean value transmission chain: user activity → protocol
-fees → treasury routing → staker payouts (cash) and/or token buybacks. If any link is leaky or
-unverifiable, the token behaves less like a cashflow asset and more like a purely speculative
-beta.
+# Value Accrual and Evidence Quality
 
-The realization ratio is the operational measure of “how much of what we think is revenue
-actually lands where it should.” A bounded realization ratio of 53.94% means we can only verify
-roughly half of the claimed inflows as realized. This is the single most important diligence metric
-in the entire report because it determines whether the yield component is real.
-
-The charts below should be narrated explicitly. The reader needs to know: (i) what is counted as
-deposited vs claimed vs residual, (ii) which buckets are verified on-chain versus inferred, and (iii)
-what specific operational fixes would move the realization ratio into the strict, investable range.
+Observed economic split remains 70% depositors / 20% stakers / 10% treasury. Mechanism existence is supported by routing and payout evidence, but campaign attribution remains bounded.
 
 ![Campaign Realization Quality](../results/charts/investor_campaign_realization.png)
 
 ![Source-of-Funds Monthly Comparison](../results/charts/investor_source_of_funds_monthly.png)
 
-## 5. Token supply, unlocks, and dilution overhang
-The token can be “cheap” on a market cap basis and still be a poor investment if near-term
-liquid supply overwhelms natural demand. For SUMR, unlock dynamics are not a footnote—they
-are central to the thesis.
+# Supply and dilution: (i) vesting/unlocks, (ii) reward emissions, and (iii) implied sell-pressure (scenario-based)
 
-The bucket table should be interpreted in plain English: modeled circulating supply is ~433.7M
-tokens, while a material share of supply remains non-circulating today. Over the next 12
-months, an estimated 265.4M tokens become newly liquid. That is a large incremental float
-increase relative to current market depth.
+Dilution remains central because investor return is net of newly liquid supply pressure and reward-emission policy.
 
-Translate the unlock table into investor language: at the current reference price, the next 12
-months of unlocks correspond to ~$0.88M of newly liquid inventory. Compare that to expected
-annual cash paid to stakers ($33.7k–$62.5k). Unlock value is an order of magnitude larger than
-the cashflow. This is why the report should not present yield in isolation; dilution and liquidity
-must be discussed on the same page.
-
-A report that wants to feel “cohesive” needs one explicit paragraph answering: why won’t
-unlocks crush the price? The only honest answers are (a) demand catalyst, (b) systematic re-locking via staking incentives, (c) coordinated vesting behavior / OTC absorption, or (d) buybacks
-funded by fees. If you cannot defend at least one with evidence, the base case must reflect
-continued price pressure.
+## Supply and Dilution Waterfall (vesting/unlocks context)
 
 | Bucket | Tokens | Notes |
 | --- | --- | --- |
@@ -152,6 +79,8 @@ continued price pressure.
 | Modeled non-circulating/unvested | 566,286,488.00 | 1B minus modeled circulating |
 | On-chain treasury wallet balance | 89,936,035.23 | Address map treasury wallet |
 | On-chain distributor balance | 35,646,038.72 | Address map distributor pipeline |
+
+## Monthly Newly Liquid Supply Schedule (next 12 months)
 
 | Period | Date | Monthly newly liquid SUMR | Cumulative newly liquid % of max supply |
 | --- | --- | --- | --- |
@@ -168,6 +97,8 @@ continued price pressure.
 | TGE + 23 | 2026-12-28 | 23,391,170 | 68.09% |
 | TGE + 24 | 2027-01-28 | 23,391,170 | 70.43% |
 
+Destination split from modeled newly-liquid supply schedule:
+
 | Destination category | Next 12 months SUMR | Next 24 months SUMR |
 | --- | --- | --- |
 | Community | 39,120,392 | 93,750,980 |
@@ -177,50 +108,61 @@ continued price pressure.
 | Core unallocated | 6,994,356 | 6,994,356 |
 | Foundation | 0 | 0 |
 
-## 6. Staker economics: cashflow, emissions, and break-even
-The report uses a useful but non-standard break-even concept: break-even price = cash paid to
-stakers divided by tokens emitted to stakers. Interpreted correctly, this is an emission-sustainability threshold: when the token trades below this price, the cash distributed per
-emitted token exceeds the market value of emissions, which is favorable for sustainability (all
-else equal).
+Estimated annual cash distributions to stakers (USD): $8,919.24 (8.9k, low) to $63,238.37 (63.2k, high).
+(Note: protocol-side outflow, staker-side inflow.)
 
-At the current price, SUMR trades below the modeled break-even price (0.771×). That is a
-supportive signal, but it is not sufficient. The cash estimates are bounded and relatively small in
-dollar terms, and the emissions schedule plus unlocks can still dominate.
+## Net Dilution Pressure vs Expected Staker Cash Distribution
 
-The key investor question is not “is there any yield,” but “how sensitive is yield to the
-parameters we can actually influence.” In this model, the levers are fee productivity (fees/TVL),
-staker share, and realization. The heatmaps later in the report are valuable, but they need
-narrative: point the reader to the base-case cell and show how quickly the economics
-deteriorate when fee productivity drops below the floor or staker share remains low.
+| Horizon | Modeled newly liquid SUMR (unlocks + scheduled emissions) | Implied USD value | Ratio vs lower cashflow ($8,919.24) | Ratio vs upper cashflow ($63,238.37) |
+| --- | --- | --- | --- | --- |
+| Next 12 months | 265,443,044 | $881,005.46 | 98.78x | 13.93x |
+| Next 24 months | 381,000,404 | $1,264,540.34 | 141.78x | 20.00x |
 
-| Metric | Lower bound | Upper bound | Notes |
-| --- | --- | --- | --- |
-| Estimated annual cash distributions to stakers (USD) | $33,736.80 | $62,543.56 | Bounded estimate; staker-side inflow |
-| Annual reward emissions to stakers (SUMR/year) | 7,836,962 | 14,528,690 | E_SUMR in break-even definition |
-| Break-even price (USD per SUMR emitted) | $0.004305 | $0.004305 | Emission-sustainability threshold |
-| Staker yield on market cap (at reference price) | 1.04% | 1.93% | Cash to stakers / reference market cap |
+The ratio NewlyLiquidSupply_USD (unlocks + scheduled emissions) / Cash_to_Stakers tests whether supply expansion is plausibly offset by distributable cashflow.
+Current modeled ratios remain in double digits across both 12- and 24-month horizons, implying cashflow is presently too small to absorb dilution without TVL/fee growth or explicit supply-control measures.
+
+## Break-Even Definition and Inputs
+
+Break-even is defined as:
+
+$$
+P_{\text{break-even}} = \frac{C_{\text{stakers}}}{E_{\text{SUMR}}}
+$$
+
+- C_stakers (annual cash distributions to stakers): lower $8,919.24, upper $63,238.37 (staker inflow sign convention).
+- E_SUMR (annual reward emissions to stakers used in incentive distribution): lower bound 2,071,913 SUMR/year, upper bound 14,690,091 SUMR/year.
+- E_SUMR is not total vesting unlocks. Newly liquid supply from vesting/unlocks is modeled separately in the dilution schedule above.
+- Break-even is a sustainability threshold under stated assumptions, not an intrinsic valuation model.
+- Emission routing is governance-sensitive and not immutable.
+- Attribution remains bounded; treat break-even as a bounded range, not a single hard floor.
+
+# Staking Economics
+
+Rewards are distributed pro rata to weighted stake, not raw stake.
+
+| Assumption item | Value |
+| --- | --- |
+| Investor tokens | 1,000,000 SUMR |
+| Reward allocation basis | pro-rata weighted stake (not raw stake) |
+| Base assumed investor multiplier | 4.0144x |
+| Base assumed weighted investor stake | 4,014,355.52 weighted SUMR |
+| Total network weighted stake (snapshot) | 553,667,684.76 weighted SUMR |
+| Investor weighted share (base) | 0.73% |
+| Raw staking participation (network) | 14.11% |
+| No lock weighted share | 0.18% |
+| Long lock weighted share | 1.26% |
+
+Base-case APR sensitivity:
 
 | Staking participation | APR (lower bound) | APR (upper bound) |
 | --- | --- | --- |
-| 10.00% | 6.91% | 12.80% |
-| 30.00% | 2.30% | 4.27% |
-| 60.00% | 1.15% | 2.13% |
+| 10.00% | 1.83% | 12.94% |
+| 30.00% | 0.61% | 4.31% |
+| 60.00% | 0.30% | 2.16% |
 
 ![Staking Lockup Distribution](../results/charts/investor_staking_lockup_distribution.png)
 
-## 7. Liquidity and market structure (can an investor actually enter/exit?)
-Protocol fundamentals do not matter if the token cannot be traded at size without moving the
-market. This section should answer one simple question: what position size is realistic given
-current liquidity and slippage?
-
-The current liquidity profile supports small-to-medium positions but not institutional entry.
-Depth within ±2% is ~$27k, and a $100k sell is estimated to incur ~1.46% slippage. Those
-numbers imply that exits during stress will be meaningfully worse, and the risk framework
-should reflect that with smaller sizing and stricter monitoring.
-
-Make the decision implication explicit: this is a token you scale into, not one you size up front. If
-your underwriting requires the ability to exit $250k–$1M quickly, the market structure is a hard
-constraint.
+# Liquidity and Market Structure
 
 | Item | Value |
 | --- | --- |
@@ -232,33 +174,11 @@ constraint.
 | Staked SUMR unlocking in 90 days | 23.35% |
 | Staked SUMR unlocking in 365 days | 33.61% |
 
-## 8. Benchmarks: where SUMR sits in the lending league table
-Benchmarks matter for two reasons: (i) they set realistic expectations for what “good” looks like
-in TVL and fee generation, and (ii) they prevent narrative drift (e.g., comparing a $50M TVL
-protocol to Aave without acknowledging the scale gap).
-
-Right now, SUMR is small relative to category leaders. That does not kill the thesis—small
-protocols can grow—but it changes how you model upside. The base case should not assume
-immediate convergence to top-tier economics. Upside requires both TVL recovery and sustained
-fee productivity, which historically is difficult in competitive lending.
-
-Use the chart below to state the obvious: the gap is large. Then state the non-obvious: what
-concrete catalysts could narrow the gap (new strategies, distribution partnerships, incentive
-redesign, improved user retention).
-
 ![External Peer Benchmarks](../results/charts/investor_external_peer_benchmarks.png)
 
-## 9. Governance and control risk
-In DeFi, governance is risk. Investors need to understand who can upgrade contracts, redirect
-fees, pause withdrawals, or otherwise change the rules of the game. This section currently reads
-like a set of tables; it should read like a risk memo.
+Peer benchmarks are directional and snapshot-based (DeFiLlama/TokenTerminal-style aggregation), used for order-of-magnitude context rather than strict accounting comparability.
 
-Rewrite approach: (i) identify the control surface (upgrade keys, multisigs, timelocks, oracles),
-(ii) describe the worst-case action and its likelihood, and (iii) list mitigations that can be verified
-on-chain.
-
-Until governance controls are clearly hardened (e.g., timelocks, transparent multisig signers,
-limited admin scope), this remains a conditional underwriting item, not a minor footnote.
+# On-Chain Address Map (Investor-Facing)
 
 | Entity role | Chain | Address (short) | Confidence | Notes |
 | --- | --- | --- | --- | --- |
@@ -269,6 +189,11 @@ limited admin scope), this remains a conditional underwriting item, not a minor 
 | Tipstream safe custody | Base | `0xb0f5...18f2` | High | SafeProxy |
 | Distribution creator/deployer | Base | `0x9f76...1a12` | Low | Creator mapping |
 | Access manager module | Base | `0xf389...9694` | High | Access manager |
+
+Full raw addresses and provenance fields are in results/tables/investor_onchain_address_map_latest.csv.
+Coverage note: this map is in-scope on-chain infrastructure mapping and is not yet a complete consolidated off-chain custody map.
+
+# Governance, Security, and Control Risk
 
 | Security control signal | Current reading |
 | --- | --- |
@@ -281,94 +206,72 @@ limited admin scope), this remains a conditional underwriting item, not a minor 
 | Proxy contracts in mapped surface | 2 |
 | Admin authority module | `0xf389bcea078acd9516414f5dabe3ddd5f7e39694` |
 
-## 10. Scenario modeling and returns (what do we get paid for taking this risk?)
-The scenario model is useful, but the narrative must discipline the outputs. If the evidence block
-says upside indicators are weak, the probability weights should not mechanically allocate ~50%
-to upside without a defensible catalyst rationale.
+# Scenario Outlook at Lower Entry Price
 
-At the current entry price, the probability-weighted outcomes imply mid-teens to ~20%
-annualized returns over 1–3 years depending on whether you use the lower or upper cashflow
-bounds. Those returns are not “free yield”; they embed an assumption that the protocol
-stabilizes and that the market eventually prices that stabilization.
+All scenario outputs in this section assume 1,000,000 SUMR at entry $0.003319 (initial cost $3,319.00).
+Figures should be interpreted relative to this entry cost.
 
-The correct investor framing is: this is a high-variance position where you are paid only if a small
-number of hard things go right. Therefore, sizing, time horizon, and kill-switches are part of the
-thesis—not afterthoughts.
+Model probability weights: Downside 26.67%, Base 24.47%, Upside 48.86%.
 
-| Bound | Horizon | Expected value | Expected PnL | Annualized |
-| --- | --- | --- | --- | --- |
-| Lower | 1 year | $3,804.04 | $485.04 | 14.61% |
-| Lower | 2 years | $4,330.89 | $1,011.89 | 14.23% |
-| Lower | 3 years | $4,899.54 | $1,580.54 | 13.86% |
-| Upper | 1 year | $3,983.38 | $664.38 | 20.02% |
-| Upper | 2 years | $4,725.26 | $1,406.26 | 19.32% |
-| Upper | 3 years | $5,544.63 | $2,225.63 | 18.66% |
+Lower-bound probability-weighted outcomes:
+
+| Horizon | Expected value | Expected PnL | Annualized |
+| --- | --- | --- | --- |
+| 1 year | $3,649.54 | $330.54 | 9.96% |
+| 2 years | $3,991.14 | $672.14 | 9.66% |
+| 3 years | $4,343.78 | $1,024.78 | 9.38% |
+
+Upper-bound probability-weighted outcomes:
+
+| Horizon | Expected value | Expected PnL | Annualized |
+| --- | --- | --- | --- |
+| 1 year | $3,987.71 | $668.71 | 20.15% |
+| 2 years | $4,734.77 | $1,415.77 | 19.44% |
+| 3 years | $5,560.19 | $2,241.19 | 18.77% |
 
 ![Probability-Weighted Outcome Paths](../results/charts/investor_probability_weighted_pnl_paths.png)
 
-| Indicator | Current reading | Directional interpretation |
-| --- | --- | --- |
-| TVL drawdown from peak | -75.91% | Weak for upside |
-| TVL change, last 30d | -36.93% | Weak for upside |
-| TVL change, last 90d | -45.73% | Weak for upside |
-| Fees change, latest 30d vs prior 30d | -32.14% | Weak for upside |
-| Fee productivity (30d annualized fees / latest TVL) | 0.808% | Live run-rate lens; directly comparable to current TVL scale |
-| Assumed holders-revenue yield on TVL | 0.162% | Still modest without re-acceleration |
-
-## 11. Treasury context and runway
-Treasury analysis is currently presented under a narrow scope, which is correct from a
-verification standpoint but dangerous from a communication standpoint. A casual reader will
-misinterpret “$1.4k stablecoins” as the full treasury unless you explicitly state this is only the
-subset of wallets we can map with high confidence.
-
-The right narrative is: we show a conservative, in-scope reserve snapshot and then stress-test
-runway under a simple operating expense assumption. The key result is not the exact runway
-number; it is whether the treasury is structurally dependent on continuous incentives (fragile) or
-can sustain operations from organic fees (durable).
-
-Because the reserve scope is narrow and attribution is bounded, runway charts should be
-presented as directional, not precise. The best use of this section is as a monitoring tool: if net
-inflows remain positive, risk decreases; if they turn negative for multiple months, you exit.
-
-![Treasury Runway Stress Case](../results/charts/investor_treasury_runway_base_opex.png)
-
-## 12. Underwriting framework (how we would size, monitor, and exit)
-A report feels cohesive when it ends with a decision framework, not just a conclusion. This is the
-section that turns analysis into an actionable investment process.
-
-Suggested rewrite: define (i) hard gates that must be cleared before increasing position size, (ii)
-ongoing monitoring metrics with thresholds, and (iii) kill-switches that trigger reduction or exit.
-Keep it short, specific, and operational.
-
-Example hard gates: realization ratio ≥60% and no longer bounded; fee productivity ≥0.50% for
-at least two consecutive months; evidence of unlock absorption (staking participation or
-documented vesting behavior); governance controls hardened (timelock + disclosed multisig).
-
-Example kill-switches: fee productivity <0.50% for a full month; TVL makes a new cycle low
-without a credible exogenous explanation; attribution worsens (realization ratio declines);
-governance changes increase admin power without notice.
-
-## 13. Visual evidence (appendix)
-The figures below are supportive evidence. In the final version of the report, each figure should
-be preceded by a one-paragraph ‘what this shows’ and followed by a one-paragraph ‘why it
-matters.’
-
 ![Scenario Yield Heatmap](../results/charts/investor_scenario_yield_heatmap.png)
 
+## Upside Plausibility Evidence Block
+
+| Indicator | Current reading | Directional interpretation |
+| --- | --- | --- |
+| TVL drawdown from peak | -75.64% | Weak for upside |
+| TVL change, last 30d | -24.65% | Weak for upside |
+| TVL change, last 90d | -42.52% | Weak for upside |
+| Fees change, latest 30d vs prior 30d | -34.18% | Weak for upside |
+| Fee productivity (30d annualized fees / latest TVL) | 0.757% | Live run-rate lens; directly comparable to current TVL scale |
+| Assumed holders-revenue yield on TVL | 0.151% | Still modest without re-acceleration |
+
+Conclusion: upside convexity exists in the model, but current live leading indicators do not yet justify de-risking the downside case.
+
+# Treasury Stress Context
+
+Treasury context should be treated as scenario-sensitive support, not a primary valuation pillar.
+Runway interpretation is explicitly provisional: treasury mapping is not yet fully comprehensive across all potential custody surfaces.
+
 ![Treasury Runway Stress Case](../results/charts/investor_treasury_runway_base_opex.png)
 
-## 14. Investment conclusion
-At $0.003319, SUMR is priced cheaply relative to TVL, but price-to-TVL is not the relevant
-valuation anchor. The relevant anchor is: can fees be produced and routed to stakers with high
-confidence, and can the market absorb the upcoming supply unlocks.
+# Practical Underwriting Framework
 
-Right now, the investment case is plausible but not proven. Fee productivity clears the floor, but
-trend is negative. Value capture is bounded at ~54% realization. Unlocks are large relative to
-cash distributions. Governance and treasury mapping remain diligence items.
+## Underwriting upgrades required to move from conditional to investable
 
-Therefore, the correct classification is conditional. If you choose to invest at this stage, it should
-be on a catalyst thesis with strict monitoring and predefined exit rules. If the hard gates clear,
-the thesis can graduate into a higher-conviction position.
+1. Evidence coverage: bounded realization ratio >=80% for >=60 consecutive days, with discrepancy tickets closed or explicitly documented.
+2. Unit economics persistence: fee productivity >=0.50% annualized for >=90 days, measured as 90d annualized fees divided by 90d average TVL.
+3. Governance constraints: published privileged role-member list, effective upgrade/routing timelocks, and on-chain auditable revenue-routing policy.
+4. Liquidity/treasury resilience: stable reserve and market depth sufficient to support downside runway, or a disclosed and credible backstop.
 
-Disclosures: This memo is for research and discussion purposes only and is not investment
-advice.
+## Kill-Switch Signals
+
+1. Fee productivity falls below 0.30% annualized for 90 consecutive days.
+2. Governance controls are not hardened (no published privileged role-member map and no effective routing/upgrade timelocks).
+3. Evidence coverage remains below 80% for 60 consecutive days with unresolved discrepancy tickets.
+4. Newly liquid supply accelerates without offsetting mitigation (lock extensions, emission reductions, or buyback/sink policy).
+
+# Final Classification
+
+At $0.003319, SUMR offers asymmetric optionality: if governance reliably routes fees to stakers and TVL stabilizes or grows, modeled break-even economics and scenario returns become plausible.
+However, the token remains a **restricted candidate** because (i) evidence coverage is not yet institutional-grade, (ii) liquidity and holder concentration remain high-risk, and (iii) unlock/dilution dynamics can dominate price action independent of fundamentals.
+
+This document is research and underwriting support material, not investment advice.

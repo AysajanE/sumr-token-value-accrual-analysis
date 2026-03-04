@@ -1,0 +1,183 @@
+{
+  "label": "SIP3.13.1",
+  "forum_claim": {
+    "label": "SIP3.13.1",
+    "topic_id": 698,
+    "title": "[SIP3.13.1] SUMR Staking V2 USDC Payout - January 2026",
+    "url": "https://forum.summer.fi/t/698",
+    "protocol_revenue_usd": 43504.49,
+    "staker_payout_usdc": 8700.898,
+    "treasury_transfer_usdc": 8961.92494
+  },
+  "governor_execute_tx": "0x30643401cafbc331687f312b4fab670470553419ea3c2cef510f48e00c488e54",
+  "governor_execute_timestamp": "2026-02-09T16:33:33.000000Z",
+  "campaign_reconstruction": {
+    "receipt_file": "base_rpc_receipt_0x30643401cafbc331687f312b4fab670470553419ea3c2cef510f48e00c488e54.json",
+    "receipt_status": 1,
+    "calldata_create_campaign": {
+      "campaign_id_hex": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "creator": "0x0000000000000000000000000000000000000000",
+      "reward_token": "0x98c49e13bf99d7cad8069faa2a370933ec9ecf17",
+      "reward_token_decimals": 6,
+      "amount_raw": 8472027641,
+      "amount_tokens": 8472.027641,
+      "amount_tokens_6dp": 8472.027641,
+      "campaign_type": 141,
+      "start_timestamp": 1767225600,
+      "duration_seconds": 2678399,
+      "campaign_data_hex": "0xfd8a7a897e7a3681f0cdf32ee4b1ded8b08247624ff11a61cda1dc7a87622131"
+    },
+    "new_campaign_events": [
+      {
+        "campaign_id_hex": "0x33b711f462991e30d2531193b02dbda4f0d2fd596a4c06d8a01701c6e0604fea",
+        "creator": "0x447bf9d1485abdc4c1778025dfdfbe8b894c3796",
+        "reward_token": "0x98c49e13bf99d7cad8069faa2a370933ec9ecf17",
+        "amount_raw": 8301739885,
+        "amount_tokens": 8301.739885,
+        "reward_token_decimals": 6,
+        "campaign_type": 141,
+        "start_timestamp": 1767225600,
+        "duration_seconds": 2678399,
+        "campaign_data_hex": "0xfd8a7a897e7a3681f0cdf32ee4b1ded8b08247624ff11a61cda1dc7a87622131",
+        "log_address": "0x8bb4c975ff3c250e0ceea271728547f3802b36fd",
+        "log_index": 432,
+        "block_number": 41932733,
+        "tx_hash": "0x30643401cafbc331687f312b4fab670470553419ea3c2cef510f48e00c488e54"
+      }
+    ],
+    "selected_source": "new_campaign_event",
+    "selected_campaign": {
+      "campaign_id_hex": "0x33b711f462991e30d2531193b02dbda4f0d2fd596a4c06d8a01701c6e0604fea",
+      "creator": "0x447bf9d1485abdc4c1778025dfdfbe8b894c3796",
+      "reward_token": "0x98c49e13bf99d7cad8069faa2a370933ec9ecf17",
+      "reward_token_decimals": 6,
+      "amount_raw": 8301739885,
+      "amount_tokens": 8301.739885,
+      "amount_tokens_6dp": 8301.739885,
+      "campaign_type": 141,
+      "start_timestamp": 1767225600,
+      "duration_seconds": 2678399,
+      "campaign_data_hex": "0xfd8a7a897e7a3681f0cdf32ee4b1ded8b08247624ff11a61cda1dc7a87622131"
+    },
+    "reconstruction_notes": [
+      "calldata_amount_differs_from_new_campaign_event",
+      "calldata_campaign_id_differs_from_new_campaign_event",
+      "calldata_creator_differs_from_new_campaign_event"
+    ]
+  },
+  "create_campaign": {
+    "campaign_id_hex": "0x33b711f462991e30d2531193b02dbda4f0d2fd596a4c06d8a01701c6e0604fea",
+    "creator": "0x447bf9d1485abdc4c1778025dfdfbe8b894c3796",
+    "reward_token": "0x98c49e13bf99d7cad8069faa2a370933ec9ecf17",
+    "reward_token_decimals": 6,
+    "amount_raw": 8301739885,
+    "amount_tokens": 8301.739885,
+    "amount_tokens_6dp": 8301.739885,
+    "campaign_type": 141,
+    "start_timestamp": 1767225600,
+    "duration_seconds": 2678399,
+    "campaign_data_hex": "0xfd8a7a897e7a3681f0cdf32ee4b1ded8b08247624ff11a61cda1dc7a87622131"
+  },
+  "usdc_funding_transfers": [
+    {
+      "tx_hash": "0x30643401cafbc331687f312b4fab670470553419ea3c2cef510f48e00c488e54",
+      "block_number": 41932733,
+      "log_index": 420,
+      "from": "0x447bf9d1485abdc4c1778025dfdfbe8b894c3796",
+      "to": "0x98c49e13bf99d7cad8069faa2a370933ec9ecf17",
+      "token_symbol": "USDC",
+      "token_address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "raw_value": "8966098880",
+      "decimals": 6,
+      "amount": 8966.09888,
+      "type": "token_transfer"
+    },
+    {
+      "tx_hash": "0x30643401cafbc331687f312b4fab670470553419ea3c2cef510f48e00c488e54",
+      "block_number": 41932733,
+      "log_index": 424,
+      "from": "0x98c49e13bf99d7cad8069faa2a370933ec9ecf17",
+      "to": "0x106cbb1f445f0bffa7894f4199ee940bf7f6dd2b",
+      "token_symbol": "USDC",
+      "token_address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "raw_value": "8966098880",
+      "decimals": 6,
+      "amount": 8966.09888,
+      "type": "token_transfer"
+    }
+  ],
+  "lvusdc_funding_transfers": [
+    {
+      "tx_hash": "0x30643401cafbc331687f312b4fab670470553419ea3c2cef510f48e00c488e54",
+      "block_number": 41932733,
+      "log_index": 418,
+      "from": "0x0000000000000000000000000000000000000000",
+      "to": "0xad30bc7e40f13d88eda608a5729d28151fcaa374",
+      "token_symbol": "LVUSDC",
+      "token_address": "0x98C49e13bf99D7CAd8069faa2A370933EC9EcF17",
+      "raw_value": "16922",
+      "decimals": 6,
+      "amount": 0.016922,
+      "type": "token_minting"
+    },
+    {
+      "tx_hash": "0x30643401cafbc331687f312b4fab670470553419ea3c2cef510f48e00c488e54",
+      "block_number": 41932733,
+      "log_index": 421,
+      "from": "0x0000000000000000000000000000000000000000",
+      "to": "0x447bf9d1485abdc4c1778025dfdfbe8b894c3796",
+      "token_symbol": "LVUSDC",
+      "token_address": "0x98C49e13bf99D7CAd8069faa2A370933EC9EcF17",
+      "raw_value": "8472027641",
+      "decimals": 6,
+      "amount": 8472.027641,
+      "type": "token_minting"
+    },
+    {
+      "tx_hash": "0x30643401cafbc331687f312b4fab670470553419ea3c2cef510f48e00c488e54",
+      "block_number": 41932733,
+      "log_index": 430,
+      "from": "0x447bf9d1485abdc4c1778025dfdfbe8b894c3796",
+      "to": "0xeac6a75e19beb1283352d24c0311de865a867dab",
+      "token_symbol": "LVUSDC",
+      "token_address": "0x98C49e13bf99D7CAd8069faa2A370933EC9EcF17",
+      "raw_value": "170287756",
+      "decimals": 6,
+      "amount": 170.287756,
+      "type": "token_transfer"
+    },
+    {
+      "tx_hash": "0x30643401cafbc331687f312b4fab670470553419ea3c2cef510f48e00c488e54",
+      "block_number": 41932733,
+      "log_index": 431,
+      "from": "0x447bf9d1485abdc4c1778025dfdfbe8b894c3796",
+      "to": "0x3ef3d8ba38ebe18db133cec108f4d14ce00dd9ae",
+      "token_symbol": "LVUSDC",
+      "token_address": "0x98C49e13bf99D7CAd8069faa2A370933EC9EcF17",
+      "raw_value": "8301739885",
+      "decimals": 6,
+      "amount": 8301.739885,
+      "type": "token_transfer"
+    }
+  ],
+  "post_execution_claims": {
+    "usdc_claim_file": "base_rpc_distributor_claimed_usdc_41932733_latest.json",
+    "usdc_claim_events": 1338,
+    "usdc_claim_total": 6791.263619,
+    "lvusdc_claim_file": "base_rpc_distributor_claimed_lvusdc_41932733_latest.json",
+    "lvusdc_claim_events": 99,
+    "lvusdc_claim_total": 1947.513023,
+    "abasusdc_claim_file": "base_rpc_distributor_claimed_abasusdc_41932733_latest.json",
+    "abasusdc_claim_events": 2220,
+    "abasusdc_claim_total": 84601.602688
+  },
+  "canonical_staker_revenue_metrics": {
+    "staker_revenue_deposited_tokens": 8301.739885,
+    "staker_revenue_claimed_tokens_considered": 1947.513023,
+    "staker_revenue_claimed_tokens_attributed": 1947.513023,
+    "staker_revenue_unclaimed_tokens_residual": 6354.226862,
+    "funding_to_fee_recipient_tokens": 170.287756,
+    "metric_policy": "deposited=funding_to_distributor; claimed_considered=all LVUSDC Claimed events post execution; claimed_attributed=min(claimed_considered,deposited); unclaimed_residual=deposited-claimed_attributed floor 0"
+  },
+  "attribution_note": "Post-execution claim totals are token-scoped and time-scoped only. They show settlement activity status, not one-to-one campaign attribution."
+}

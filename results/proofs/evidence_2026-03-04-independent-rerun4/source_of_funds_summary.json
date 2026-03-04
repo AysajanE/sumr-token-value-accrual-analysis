@@ -1,0 +1,87 @@
+{
+  "generated_from": "data/snapshots/external_review/2026-03-04-independent-rerun4",
+  "analysis_scope": {
+    "treasury_address": "0x447bf9d1485abdc4c1778025dfdfbe8b894c3796",
+    "fee_aligned_token_set": [
+      "EURC",
+      "USDC",
+      "USDT",
+      "WETH"
+    ],
+    "fee_aligned_inflow_definition": "token transfer where to == TREASURY and token_symbol in fee_aligned_token_set",
+    "staker_payout_outflow_definition": "staker_revenue_deposited_tokens per cycle from staker_revenue_canonical_summary (funding_to_distributor transfer amount)",
+    "comparison_basis": "base-chain treasury fee-aligned inflows vs base-chain staker payout outflows"
+  },
+  "treasury_fee_token_flows": {
+    "base": {
+      "inflow_count": 40,
+      "inflow_totals_by_token": {
+        "EURC": 4486.279047,
+        "USDC": 34324.196522,
+        "WETH": 2.2293043631158715
+      },
+      "outflow_count": 19,
+      "outflow_totals_by_token": {
+        "EURC": 4010.0,
+        "USDC": 32161.27567
+      },
+      "net_totals_by_token": {
+        "EURC": 476.279047,
+        "USDC": 2162.920852,
+        "WETH": 2.2293043631158715
+      }
+    },
+    "ethereum": {
+      "inflow_count": 62,
+      "inflow_totals_by_token": {
+        "USDC": 98247.334635,
+        "USDT": 26263.914719,
+        "WETH": 15.572423942662503
+      },
+      "outflow_count": 6,
+      "outflow_totals_by_token": {
+        "USDC": 92699.0,
+        "USDT": 25000.0,
+        "WETH": 13.76
+      },
+      "net_totals_by_token": {
+        "USDC": 5548.334635,
+        "USDT": 1263.914719,
+        "WETH": 1.812423942662503
+      }
+    }
+  },
+  "staker_payout_outflows_from_treasury": {
+    "cycle_count": 2,
+    "totals_by_token": {
+      "LVUSDC": 8301.739885,
+      "USDC": 5833.985241
+    }
+  },
+  "source_of_funds_comparison": {
+    "status": "BOUNDED",
+    "status_basis": [
+      "non_fee_token_payouts_present:LVUSDC"
+    ],
+    "comparable_tokens": [
+      "USDC"
+    ],
+    "non_comparable_payout_tokens": [
+      "LVUSDC"
+    ],
+    "comparable_fee_aligned_inflow_total": 34324.196522,
+    "comparable_staker_payout_outflow_total": 5833.985241,
+    "comparable_coverage_ratio": 5.883490462193303,
+    "coverage_by_token": [
+      {
+        "token_symbol": "USDC",
+        "fee_aligned_inflow_to_treasury_base": 34324.196522,
+        "staker_payout_outflow_from_treasury_base": 5833.985241,
+        "coverage_ratio": 5.883490462193303,
+        "coverage_meets_or_exceeds_payout": true
+      }
+    ],
+    "monthly_comparison_file": "source_of_funds_monthly_comparison.csv",
+    "note": "BOUNDED/UNKNOWN classification reflects token-level treasury flow evidence. It does not prove campaign-exact funding lineage for every payout token."
+  }
+}

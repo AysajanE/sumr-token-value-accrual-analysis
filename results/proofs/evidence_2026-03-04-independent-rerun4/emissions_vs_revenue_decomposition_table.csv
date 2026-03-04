@@ -1,0 +1,6 @@
+metric,value,unit,notes
+emissions_total_sumr_tokens,3396151.0,SUMR,From GRM RewardAdded events
+revenue_deposited_usdc_equivalent,14619.857690873545,USD-equivalent,USDC direct + LVUSDC valued via convertToAssets at segment blocks
+revenue_claimed_attributed_usdc_equivalent,2062.006998650328,USD-equivalent,Attributed claimed component only
+revenue_unclaimed_residual_usdc_equivalent,12571.21312710705,USD-equivalent,Unclaimed residual component
+break_even_sumr_price_for_emissions_equal_revenue_deposited,0.004304831466820393,USD/SUMR,Formula-based threshold; no external price feed required

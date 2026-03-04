@@ -1,0 +1,32 @@
+[
+  {
+    "chain": "base_tipjar",
+    "method": "shakeAll",
+    "count": 13
+  },
+  {
+    "chain": "base_tipjar",
+    "method": "unknown",
+    "count": 1
+  },
+  {
+    "chain": "arbitrum_tipjar",
+    "method": "0xfffa445e",
+    "count": 11
+  },
+  {
+    "chain": "arbitrum_tipjar",
+    "method": "unknown",
+    "count": 1
+  },
+  {
+    "chain": "ethereum_tipjar",
+    "method": "shakeAll",
+    "count": 11
+  },
+  {
+    "chain": "ethereum_tipjar",
+    "method": "unknown",
+    "count": 1
+  }
+]

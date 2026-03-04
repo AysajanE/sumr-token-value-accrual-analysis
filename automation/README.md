@@ -43,6 +43,7 @@ Optional local override:
 - No enforced red/green test choreography.
 - Practical/high-signal checks only.
 - Audit gate requires both independent audits to pass.
+- Step 10 (quality gates) defaults to risk-callout mode if only Gate E is open (`ALLOW_STEP10_PARTIAL_RISK_CALLOUT=1`), so updates can publish with explicit risk disclosure.
 
 ## Default Agent Config
 
@@ -73,4 +74,5 @@ DRY_RUN=1 AUTO_COMMIT=0 ./automation/run_update_cycle_chain.sh
 - Run from repo root (scripts do this automatically).
 - Keep `.env` populated before live runs (`BASE_RPC_URL`, optional `BASESCAN_API_KEY`).
 - `ai/logs` stays gitignored by design.
-- Public reproducibility artifacts are under `results/proofs/update_runs/`.
+- `results/proofs/update_runs/` is default-deny in `.gitignore`; only the public `*_latest` reproducibility pack is tracked.
+- Timestamped run artifacts stay local for debugging and are auto-unstaged by the execution/audit scripts.

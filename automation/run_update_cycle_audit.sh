@@ -488,6 +488,35 @@ copy_phase_c_artifacts_to_tracked() {
   cp "$PHASE_C_FIX_REPORT_PATH" "$TRACKED_PHASE_C_FIX_LATEST"
 }
 
+is_public_update_run_path() {
+  local path="$1"
+  case "$path" in
+    results/proofs/update_runs/.gitkeep) return 0 ;;
+    results/proofs/update_runs/*/execution_manifest_latest.json) return 0 ;;
+    results/proofs/update_runs/*/execution_summary_latest.md) return 0 ;;
+    results/proofs/update_runs/*/runtime_context_latest.json) return 0 ;;
+    results/proofs/update_runs/*/execution_reports_latest/*.report.json) return 0 ;;
+    results/proofs/update_runs/*/audit_phase_a_codex_latest.json) return 0 ;;
+    results/proofs/update_runs/*/audit_phase_a_claude_latest.json) return 0 ;;
+    results/proofs/update_runs/*/audit_phase_b_triage_latest.json) return 0 ;;
+    results/proofs/update_runs/*/audit_phase_b_triage_latest.md) return 0 ;;
+    results/proofs/update_runs/*/audit_phase_c_fix_latest.json) return 0 ;;
+    results/proofs/update_runs/*/audit_summary_latest.md) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+unstage_non_public_update_run_artifacts() {
+  local path
+  while IFS= read -r path; do
+    [[ "$path" == results/proofs/update_runs/* ]] || continue
+    if ! is_public_update_run_path "$path"; then
+      git restore --staged -- "$path" >/dev/null 2>&1 || true
+      info "Unstaged non-public update-run artifact: $path"
+    fi
+  done < <(git diff --cached --name-only)
+}
+
 auto_commit_step() {
   local step_label="$1"
 
@@ -501,6 +530,7 @@ auto_commit_step() {
   fi
 
   git add -A -- . ':(exclude)ai/**' ':(exclude)tmp/**'
+  unstage_non_public_update_run_artifacts
 
   if git diff --cached --quiet --ignore-submodules --; then
     info "No eligible tracked changes to commit for ${step_label}."
