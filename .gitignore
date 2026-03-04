@@ -41,6 +41,8 @@ paper/*.pdf
 docs/**
 !docs/decisions/
 !docs/decisions/ADR-0001-payout-attribution-overlap-policy.md
+!docs/dependency_graph.md
+!docs/update_cycle_playbook.md
 !docs/definitions.md
 !docs/fact_check_report.md
 !docs/validation_plan.md

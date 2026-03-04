@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "UpdateCycleFixReport",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "phase",
+    "iteration",
+    "status",
+    "summary",
+    "fixed_items",
+    "remaining_items",
+    "commands_run",
+    "artifacts",
+    "risks",
+    "next_actions"
+  ],
+  "properties": {
+    "phase": {
+      "type": "string"
+    },
+    "iteration": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "fixed",
+        "partial",
+        "blocked",
+        "no_change"
+      ]
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "fixed_items": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "remaining_items": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "commands_run": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "risks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "next_actions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
