@@ -30,6 +30,7 @@ set -euo pipefail
 #   PHASE_B_ENABLED=1
 #   PHASE_C_ENABLED=1
 #   PHASE_C_MAX_ITERATIONS=3
+#   PHASE_C_FIX_MODE=fresh|resume    (default: fresh)
 #
 #   GATE_FAIL_SEVERITIES=critical,high
 #   GATE_FAIL_VERDICTS=fail,blocked,conditional_pass
@@ -62,7 +63,8 @@ CHARTS_DIR="${CHARTS_DIR:-results/charts}"
 TRACKED_RUN_DIR="${TRACKED_RUN_DIR:-results/proofs/update_runs/${RUN_TAG}}"
 
 PLAYBOOK_PATH="${PLAYBOOK_PATH:-docs/update_cycle_playbook.md}"
-EXEC_TEMPLATE_PATH="${EXEC_TEMPLATE_PATH:-automation/prompts/update_cycle_implementation_prompt.md}"
+EXEC_TEMPLATE_PATH="${EXEC_TEMPLATE_PATH:-ai/prompts/update_cycle_implementation_prompt.md}"
+FALLBACK_EXEC_TEMPLATE_PATH="${FALLBACK_EXEC_TEMPLATE_PATH:-automation/prompts/update_cycle_implementation_prompt.md}"
 AUDIT_TEMPLATE_PATH="${AUDIT_TEMPLATE_PATH:-automation/prompts/update_cycle_implementation_audit_prompt.md}"
 
 AUDIT_SCHEMA_PATH="${AUDIT_SCHEMA_PATH:-automation/schemas/update_audit_report.schema.json}"
@@ -82,6 +84,7 @@ PHASE_B_ENABLED="${PHASE_B_ENABLED:-1}"
 PHASE_C_ENABLED="${PHASE_C_ENABLED:-1}"
 PHASE_C_MAX_ITERATIONS="${PHASE_C_MAX_ITERATIONS:-3}"
 PHASE_C_STOP_ON_NO_CHANGE="${PHASE_C_STOP_ON_NO_CHANGE:-1}"
+PHASE_C_FIX_MODE="${PHASE_C_FIX_MODE:-fresh}"
 
 GATE_FAIL_SEVERITIES="${GATE_FAIL_SEVERITIES:-critical,high}"
 GATE_FAIL_VERDICTS="${GATE_FAIL_VERDICTS:-fail,blocked,conditional_pass}"
@@ -128,6 +131,8 @@ CLAUDE_TRACKED_DELTA="$TRACE_DIR/phase_a_claude.tracked.delta.txt"
 TRIAGE_GATE_STATUS="unknown"
 TRIAGE_GATE_REASON="not_evaluated"
 PHASE_C_ITERATIONS_RUN=0
+CODEX_AUDIT_VERDICT="unknown"
+CLAUDE_AUDIT_VERDICT="unknown"
 
 TRACKED_CODEX_AUDIT_JSON="$TRACKED_RUN_DIR/audit_phase_a_codex_${RUN_STAMP}.json"
 TRACKED_CODEX_AUDIT_LATEST="$TRACKED_RUN_DIR/audit_phase_a_codex_latest.json"
@@ -467,7 +472,7 @@ auto_commit_step() {
     return 0
   fi
 
-  git add -A -- . ':(exclude)ai/logs/**' ':(exclude)tmp/**'
+  git add -A -- . ':(exclude)ai/**' ':(exclude)tmp/**'
 
   if git diff --cached --quiet --ignore-submodules --; then
     info "No eligible tracked changes to commit for ${step_label}."
@@ -501,6 +506,12 @@ run_codex_audit() {
   fi
 
   validate_audit_report "$CODEX_REPORT_PATH" "codex"
+  CODEX_AUDIT_VERDICT="$(python - "$CODEX_REPORT_PATH" <<'PY'
+import json
+import sys
+print(str(json.load(open(sys.argv[1], "r", encoding="utf-8")).get("verdict", "unknown")))
+PY
+)"
 
   snapshot_tracked_hashes "$CODEX_TRACKED_AFTER"
   assert_no_tracked_mutation "$CODEX_TRACKED_BEFORE" "$CODEX_TRACKED_AFTER" "$CODEX_TRACKED_DELTA" "Codex audit"
@@ -544,6 +555,12 @@ PY
   fi
 
   validate_audit_report "$CLAUDE_REPORT_PATH" "claude"
+  CLAUDE_AUDIT_VERDICT="$(python - "$CLAUDE_REPORT_PATH" <<'PY'
+import json
+import sys
+print(str(json.load(open(sys.argv[1], "r", encoding="utf-8")).get("verdict", "unknown")))
+PY
+)"
 
   snapshot_tracked_hashes "$CLAUDE_TRACKED_AFTER"
   assert_no_tracked_mutation "$CLAUDE_TRACKED_BEFORE" "$CLAUDE_TRACKED_AFTER" "$CLAUDE_TRACKED_DELTA" "Claude audit"
@@ -617,18 +634,21 @@ fail_verdict = {x.strip().lower() for x in gate_verdict_csv.split(",") if x.stri
 
 fail_by_severity = any(str(f["severity"]).lower() in fail_sev for f in fix_queue)
 fail_by_verdict = any(str(r.get("verdict", "")).lower() in fail_verdict for r in reports)
+both_audits_pass = all(str(r.get("verdict", "")).lower() == "pass" for r in reports)
 
-if fail_by_severity or fail_by_verdict:
+if both_audits_pass:
+    gate_status = "pass"
+    gate_reason = "both_audits_passed"
+else:
     gate_status = "fail"
     if fail_by_severity and fail_by_verdict:
-        gate_reason = "severity_and_verdict_triggered"
+        gate_reason = "awaiting_both_pass__severity_and_verdict_triggered"
     elif fail_by_severity:
-        gate_reason = "severity_triggered"
+        gate_reason = "awaiting_both_pass__severity_triggered"
+    elif fail_by_verdict:
+        gate_reason = "awaiting_both_pass__verdict_triggered"
     else:
-        gate_reason = "verdict_triggered"
-else:
-    gate_status = "pass"
-    gate_reason = "no_trigger"
+        gate_reason = "awaiting_both_pass"
 
 triage = {
     "generated_at_utc": datetime.now(timezone.utc).isoformat(),
@@ -645,8 +665,11 @@ triage = {
         "unique_findings": len(fix_queue),
     },
     "gate": {
+        "both_audits_pass_required": True,
+        "both_audits_pass": both_audits_pass,
         "status": gate_status,
         "reason": gate_reason,
+        "severity_policy_is_advisory": True,
         "fail_severities": sorted(fail_sev),
         "fail_verdicts": sorted(fail_verdict),
         "failed_by_severity": fail_by_severity,
@@ -665,6 +688,8 @@ md.append("")
 md.append(f"- Generated (UTC): {triage['generated_at_utc']}")
 md.append(f"- Gate status: {gate_status}")
 md.append(f"- Gate reason: {gate_reason}")
+md.append(f"- Both audits pass required: {triage['gate']['both_audits_pass_required']}")
+md.append(f"- Both audits pass observed: {triage['gate']['both_audits_pass']}")
 md.append("")
 md.append("## Agent Verdicts")
 md.append("")
@@ -769,13 +794,21 @@ run_phase_c_fix_iteration() {
 }
 EOF_FIX
   else
-    local cmd=(codex -a "$CODEX_APPROVAL" exec --skip-git-repo-check -C "." -o "$PHASE_C_FIX_REPORT_PATH" --output-schema "$FIX_SCHEMA_PATH")
-    [[ -n "$CODEX_MODEL" ]] && cmd+=(-m "$CODEX_MODEL")
-    [[ -n "$CODEX_SANDBOX" ]] && cmd+=(-s "$CODEX_SANDBOX")
-    [[ -n "$CODEX_REASONING_EFFORT" ]] && cmd+=(-c "model_reasoning_effort=\"$CODEX_REASONING_EFFORT\"")
-    cmd+=(-)
+    local cmd=()
+    if [[ "$PHASE_C_FIX_MODE" == "resume" && "$iteration" -gt 1 ]]; then
+      cmd=(codex exec resume --last --skip-git-repo-check -C "." -o "$PHASE_C_FIX_REPORT_PATH")
+      [[ -n "$CODEX_MODEL" ]] && cmd+=(-m "$CODEX_MODEL")
+      cmd+=(-)
+      info "Running Phase C remediation iteration ${iteration} via Codex (resume mode)"
+    else
+      cmd=(codex -a "$CODEX_APPROVAL" exec --skip-git-repo-check -C "." -o "$PHASE_C_FIX_REPORT_PATH" --output-schema "$FIX_SCHEMA_PATH")
+      [[ -n "$CODEX_MODEL" ]] && cmd+=(-m "$CODEX_MODEL")
+      [[ -n "$CODEX_SANDBOX" ]] && cmd+=(-s "$CODEX_SANDBOX")
+      [[ -n "$CODEX_REASONING_EFFORT" ]] && cmd+=(-c "model_reasoning_effort=\"$CODEX_REASONING_EFFORT\"")
+      cmd+=(-)
+      info "Running Phase C remediation iteration ${iteration} via Codex (fresh mode)"
+    fi
 
-    info "Running Phase C remediation iteration ${iteration} via Codex"
     if ! run_with_timeout "$CODEX_TIMEOUT_SEC" "${cmd[@]}" < "$PHASE_C_PROMPT" > >(tee "$PHASE_C_STDOUT_LOG") 2> >(tee "$PHASE_C_STDERR_LOG" >&2); then
       die "Phase C remediation failed at iteration ${iteration}. See $PHASE_C_STDERR_LOG"
     fi
@@ -832,7 +865,10 @@ write_summary() {
 - Evidence dir: ${EVIDENCE_DIR}
 - Gate status: ${TRIAGE_GATE_STATUS}
 - Gate reason: ${TRIAGE_GATE_REASON}
+- Codex audit verdict: ${CODEX_AUDIT_VERDICT}
+- Claude audit verdict: ${CLAUDE_AUDIT_VERDICT}
 - Phase C iterations run: ${PHASE_C_ITERATIONS_RUN}
+- Phase C fix mode: ${PHASE_C_FIX_MODE}
 
 ## Artifacts
 
@@ -872,10 +908,18 @@ preflight() {
 
   [[ "$PHASE_C_MAX_ITERATIONS" =~ ^[0-9]+$ ]] || die "PHASE_C_MAX_ITERATIONS must be numeric"
   [[ "$GATE_FAILURE_EXIT_CODE" =~ ^[0-9]+$ ]] || die "GATE_FAILURE_EXIT_CODE must be numeric"
+  [[ "$PHASE_C_FIX_MODE" == "fresh" || "$PHASE_C_FIX_MODE" == "resume" ]] || die "PHASE_C_FIX_MODE must be fresh or resume"
 
   [[ -f "$PLAYBOOK_PATH" ]] || die "Missing playbook: $PLAYBOOK_PATH"
   [[ -f "$AUDIT_TEMPLATE_PATH" ]] || die "Missing audit prompt template: $AUDIT_TEMPLATE_PATH"
-  [[ -f "$EXEC_TEMPLATE_PATH" ]] || die "Missing execution prompt template: $EXEC_TEMPLATE_PATH"
+  if [[ ! -f "$EXEC_TEMPLATE_PATH" ]]; then
+    if [[ -f "$FALLBACK_EXEC_TEMPLATE_PATH" ]]; then
+      info "Execution prompt template not found at '$EXEC_TEMPLATE_PATH'; using fallback '$FALLBACK_EXEC_TEMPLATE_PATH'"
+      EXEC_TEMPLATE_PATH="$FALLBACK_EXEC_TEMPLATE_PATH"
+    else
+      die "Missing execution prompt template at '$EXEC_TEMPLATE_PATH' and fallback '$FALLBACK_EXEC_TEMPLATE_PATH'"
+    fi
+  fi
   [[ -f "$AUDIT_SCHEMA_PATH" ]] || die "Missing audit schema: $AUDIT_SCHEMA_PATH"
   [[ -f "$FIX_SCHEMA_PATH" ]] || die "Missing fix schema: $FIX_SCHEMA_PATH"
 
@@ -901,7 +945,7 @@ preflight() {
   info "EVIDENCE_DIR=${EVIDENCE_DIR}"
   info "TRACKED_RUN_DIR=${TRACKED_RUN_DIR}"
   info "LOG_ROOT=${LOG_ROOT}"
-  info "PHASE_C_ENABLED=${PHASE_C_ENABLED} PHASE_C_MAX_ITERATIONS=${PHASE_C_MAX_ITERATIONS}"
+  info "PHASE_C_ENABLED=${PHASE_C_ENABLED} PHASE_C_MAX_ITERATIONS=${PHASE_C_MAX_ITERATIONS} PHASE_C_FIX_MODE=${PHASE_C_FIX_MODE}"
 }
 
 export PLAYBOOK_PATH EXEC_TEMPLATE_PATH AUDIT_TEMPLATE_PATH
@@ -914,7 +958,7 @@ run_phase_a
 run_phase_b
 
 if [[ "$TRIAGE_GATE_STATUS" != "pass" && "$PHASE_C_ENABLED" == "1" ]]; then
-  info "Phase B gate failed (${TRIAGE_GATE_REASON}). Starting Phase C remediation loop."
+  info "Both-audit pass gate failed (${TRIAGE_GATE_REASON}). Starting Phase C remediation loop."
 
   for ((iter = 1; iter <= PHASE_C_MAX_ITERATIONS; iter++)); do
     local_rc=0
@@ -932,7 +976,7 @@ if [[ "$TRIAGE_GATE_STATUS" != "pass" && "$PHASE_C_ENABLED" == "1" ]]; then
     run_phase_b
 
     if [[ "$TRIAGE_GATE_STATUS" == "pass" ]]; then
-      info "Gate passed after Phase C iteration ${iter}."
+      info "Both audits passed after Phase C iteration ${iter}."
       break
     fi
   done
