@@ -5,13 +5,15 @@ This folder contains the non-interactive automation chain for SUMR update rounds
 ## Scripts
 
 - `run_update_cycle_execution.sh`
-  - Executes the playbook steps methodically (full or monitoring mode).
+  - Executes the playbook step-by-step via Codex (one Codex run per step).
   - Auto-commits after each completed step.
   - Writes raw logs to `ai/logs/...` (gitignored).
-  - Writes tracked reproducibility manifests to `results/proofs/update_runs/<RUN_TAG>/`.
+  - Writes tracked reproducibility manifests and step reports to `results/proofs/update_runs/<RUN_TAG>/`.
 
 - `run_update_cycle_audit.sh`
   - Runs Phase A (dual audit: Codex + Claude), Phase B triage, and optional Phase C remediation loop.
+  - Loop stop condition is `both audits verdict == pass` (or max iterations reached).
+  - Phase C remediation defaults to fresh Codex runs (`PHASE_C_FIX_MODE=fresh`), with optional `resume`.
   - Auto-commits after each phase step.
   - Persists only important public audit artifacts in `results/proofs/update_runs/<RUN_TAG>/`.
 
@@ -22,23 +24,33 @@ This folder contains the non-interactive automation chain for SUMR update rounds
 
 Used directly by the scripts:
 
-- `automation/prompts/update_cycle_implementation_prompt.md` (Phase C remediation prompt)
+- `ai/prompts/update_cycle_implementation_prompt.md` (execution + Phase C remediation prompt, preferred)
 - `automation/prompts/update_cycle_implementation_audit_prompt.md` (Phase A audit prompt)
 
 Optional local override:
-- Set `EXEC_TEMPLATE_PATH` / `AUDIT_TEMPLATE_PATH` to point to `ai/prompts/...` if you keep private prompt variants there.
+- `run_update_cycle_execution.sh` falls back to `automation/prompts/update_cycle_implementation_prompt.md` if `ai/prompts/...` is missing.
+- You can override with `EXEC_TEMPLATE_PATH` / `AUDIT_TEMPLATE_PATH`.
 
 ## Schemas
 
 - `schemas/update_audit_report.schema.json`
 - `schemas/update_fix_report.schema.json`
+- `schemas/update_execution_report.schema.json`
 
 ## Default Behavior
 
 - Integrity-first, reproducibility-focused.
 - No enforced red/green test choreography.
 - Practical/high-signal checks only.
-- Gate policy fails on critical/high findings or fail-class verdicts.
+- Audit gate requires both independent audits to pass.
+
+## Default Agent Config
+
+- `CODEX_MODEL=gpt-5.3-codex`
+- `CODEX_REASONING_EFFORT=xhigh`
+- `CODEX_NETWORK_ACCESS=1` (`workspace-write` sandbox network enabled)
+- `CLAUDE_MODEL=opus`
+- `CLAUDE_EFFORT=high`
 
 ## Typical Commands
 
